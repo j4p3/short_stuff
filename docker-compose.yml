@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:12-alpine
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  web:
+    build: .
+    volumes:
+      - .:/short_stuff
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    ports:
+      - 4000:4000
+volumes:
+  pgdata:

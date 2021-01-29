@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- jp.bonner@bonner.jp if you want to help and hold, my bully boys, hold -->
+
+    <meta charset="utf-8">
+    <title>is the squeeze squozen yet?</title>
+
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="is the squeeze squoze yet?">
+    <meta name="description" content="<%= squeeze_status_answer() %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1c1c1c">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://isthesqueezesquoze.com/">
+    <meta property="og:title" content="is the squeeze squoze yet?">
+    <meta property="og:description" content="<%= squeeze_status_answer() %>">
+    <meta property="og:image" content="https://isthesqueezesquoze.com/no.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://isthesqueezesquoze.com/">
+    <meta property="twitter:title" content="is the squeeze squoze yet?">
+    <meta property="twitter:description" content="<%= squeeze_status_answer() %>">
+    <meta property="twitter:image" content="https://isthesqueezesquoze.com/no.png">
+
+    <!-- Apple -->
+    <link rel="apple-touch-icon" href="https://isthesqueezesquoze.com/no.png">
+
+    <%= csrf_meta_tag() %>
+    <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+  </head>
+  <body>
+    <%= @inner_content %>
+  </body>
+</html>

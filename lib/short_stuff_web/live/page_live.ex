@@ -1,0 +1,58 @@
+defmodule ShortStuffWeb.PageLive do
+  use ShortStuffWeb, :live_view
+  use Timex
+
+  @presence_topic "presence"
+
+  # Template helpers
+  def did_it_or_not(verb) do
+    if ShortStuff.Shorts.Squeeze.are_squeezed?(), do: "#{verb}", else: "#{verb} not"
+  end
+
+  def date_format(datetime) do
+    {:ok, human_string} = datetime
+    |> Timex.Timezone.convert("America/New_York")
+    |> Timex.format("%A, %B %d", :strftime)
+    human_string
+  end
+
+  # Lifecycle functions & live event handlers
+  @impl true
+  def mount(_params, _session, socket) do
+    ShortStuffWeb.Presence.track(self(), @presence_topic, socket.id, %{})
+    ShortStuffWeb.Endpoint.subscribe(@presence_topic)
+    present =
+      ShortStuffWeb.Presence.list(@presence_topic)
+      |> map_size()
+
+    {:ok,
+     assign(socket,
+       short_info: ShortStuff.Shorts.Info.last,
+       present: present,
+       subscribe_active: false
+     )}
+  end
+
+  @impl true
+  def handle_info(
+        %{event: "presence_diff", payload: %{joins: joins, leaves: leaves}},
+        %{assigns: %{present: present}} = socket
+      ) do
+        new_present = present + map_size(joins) - map_size(leaves)
+    {:noreply, assign(socket, present: new_present)}
+  end
+
+  @impl true
+  def handle_event("init_subscribe", _value, socket) do
+    {:noreply, assign(socket, subscribe_active: true)}
+  end
+
+  @impl true
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
+  defp apply_action(socket, :index, _params) do
+    assign(socket, subscribe_active: false)
+  end
+end

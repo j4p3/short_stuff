@@ -1,0 +1,15 @@
+<p class="alert alert-info" role="alert"
+  phx-click="lv:clear-flash"
+  phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+
+<p class="alert alert-danger" role="alert"
+  phx-click="lv:clear-flash"
+  phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+
+<div class="container">
+  <%= @inner_content %>
+  <%= render ShortStuffWeb.ContentView, "essay.html" %>
+  <%= render ShortStuffWeb.ContentView, "resources.html" %>
+  <%= render ShortStuffWeb.ContentView, "points_of_interest.html" %>
+  <%= render ShortStuffWeb.ContentView, "footer.html" %>
+</div>

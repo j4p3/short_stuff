@@ -1,0 +1,31 @@
+<article>
+  <h3>points of interest:</h3>
+  <p>
+    if you don't know this you shouldn't be gambling, but
+  <ul>
+    <li>
+      robinhood didn't halt trading just because they hate you, they did it because they ran out of cash. A broker
+      like them needs to hold reserves until the trade is processed by the clearinghouse, which can be a while. And
+      the reserves they need to hold just went completely bananas. Robinhood and others were unprepared for it. We'll
+      see if they can summon the cash reserves for the coming days, but boy, what a terrible way to communicate that
+      you're trying to avoid going broke to your users.
+    </li>
+    <li>
+      ok, this one's new to me: robinhood is apparently selling shares belonging to accounts that are not trading on
+      margin. Margin calls are normal. Selling shares that your clients own outright is crazytown what-in-the-world
+      shenanigans.
+    </li>
+    <li>
+      your broker is lending your shares out to people who want them, like the hedge funds you're betting against.
+      depending who your broker is you can call them and tell them to stop, turn off margin trading, set limit sells
+      at stratospherically high prices, or go get a real broker.
+    </li>
+    <li>
+      your broker is selling your information, like your sell price, to anybody who can pay for it. if you set a
+      stop-loss sell at 100, and some other gambler set a stop-loss sell at 115, then a hedge fund wanting to drive
+      the price down can start to chain-trigger stop-loss sells until the prices reaches a level low enough to allow
+      them to escape the short squeeze.
+    </li>
+  </ul>
+  </p>
+</article>

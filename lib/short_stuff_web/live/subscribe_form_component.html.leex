@@ -1,0 +1,30 @@
+<%= f = form_for @changeset, "#",
+  id: "subscriber-form",
+  phx_target: @myself,
+  phx_submit: "subscribe" %>
+
+  <div class="container">
+    <h3>give me ur info & I'll tell you when the numbers change</h3>
+      <div class="form_row">
+        <div>
+          <%= label f, :email %>
+          <%= error_tag f, :email %>
+        </div>
+        <div>
+          <%= email_input f, :email %>
+        </div>
+      </div>
+      <div class="form-row">
+        <div>
+          <%= label f, :phone %>
+          <%= error_tag f, :phone %>
+        </div>
+        <div>
+          <%= telephone_input f, :phone %>
+        </div>
+      </div>
+      <div class="form-row">
+        <%= submit "Subscribe", phx_disable_with: "Subscribing..." %>
+      </div>
+  </div>
+</form>

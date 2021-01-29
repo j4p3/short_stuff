@@ -1,0 +1,24 @@
+<article>
+  <h3>resources:</h3>
+  <p>
+    do your own research you apes, don't rely on me
+  <ul>
+    <li><a target="_blank" href="https://screener.shortsight.com/">
+        s3 shortsight (subscription)
+      </a></li>
+    <li><a target="_blank" href="https://www.ortex.com/symbol/nyse/gme/short_interest">
+        ortex short interest (trial + subscription)
+      </a></li>
+    <li><a target="_blank" href="https://fintel.io/ss/us/gme">
+        fintel short shares availability
+      </a></li>
+    <li><a target="_blank" href="https://iborrowdesk.com/report/GME">
+        iBorrow short shares borrow rates
+      </a></li>
+    <li><a target="_blank"
+        href="https://www.interactivebrokers.com/en/index.php?key=gme&cntry=usa&tag=United+States&ib_entity=&ln=&asset=&f=4587">
+        Interactive Brokers borrow availability (free trial)
+      </a></li>
+  </ul>
+  </p>
+</article>

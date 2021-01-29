@@ -1,0 +1,47 @@
+<%= if @subscribe_active == true do %>
+  <%= live_modal @socket, ShortStuffWeb.SubscribeFormComponent,
+    id: :subscribe,
+    action: @live_action,
+    changeset: :subscriber,
+    return_to: Routes.page_path(@socket, :index) %>
+<% end %>
+
+<nav>
+  <span><a href="https://www.youtube.com/playlist?list=PLqcnUvXhHGbNPxxgZnDybjGopn2JFbDhX" target="_blank">hold, me bully boys, hold</a></span>
+  <span class="live">LIVE: <%= @present %></span>
+</nav>
+<%= if @short_info != nil do %>
+  <main>
+    <h2>as of <span class="live"><%= date_format(@short_info.updated_at) %></span>,</h2>
+    <h1>
+      the squeeze <span class="live"><%= did_it_or_not("has") %><span class="blinking">_</span></span>been squoze.
+    </h1>
+  </main>
+  <section>
+    <p>GME shorts <span class="live"><%= did_it_or_not("have") %></span> begun to close their positions in substantial numbers.</p>
+    <h3>the situation:</h3>
+    <p>
+      <ul>
+        <li><b>short interest: </b>
+        <span class="live"><%= @short_info.short_interest %> </span>
+        <span>(<%= @short_info.source %>)</span>
+        </li>
+        <li><b>change in short share availability:</b>
+          <span class="live"><%= @short_info.borrow_availability %></span>
+        </li>
+        <%= for note <- @short_info.notes do %>
+          <li><%= note %></li>
+        <% end %>
+      </ul>
+    </p>
+  </section>
+<% else %>
+  <main>
+    <h1>no data. bug me on twitter</h1>
+  </main>
+  <section>
+  </section>
+<% end %>
+<section>
+  <button phx-click="init_subscribe">click to subscribe and I'll keep you informed about changes in short interest and borrow availability</button>
+</section>
