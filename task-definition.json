@@ -5,7 +5,7 @@
     "networkMode": "none",
     "containerDefinitions": [
         {
-            "name": "",
+            "name": "dev-shortstuff",
             "image": "",
             "repositoryCredentials": {
                 "credentialsParameter": ""
