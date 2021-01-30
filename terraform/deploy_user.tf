@@ -2,7 +2,7 @@ resource "aws_iam_user" "ci_user" {
   name = "short-stuff-ci-deploy-user"
 }
 
-resource "aws_iam_user_policy" "ci_ecr_access" {
+resource "aws_iam_user_policy" "ci_ecr_access_2" {
   user = aws_iam_user.ci_user.name
 
   policy = <<EOF
