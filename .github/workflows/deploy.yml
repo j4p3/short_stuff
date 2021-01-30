@@ -33,7 +33,7 @@ name: Deploy to Amazon ECS
 jobs:
   deploy:
     name: Deploy
-    runs-on: alpine:3.9
+    runs-on: Ubuntu-20.04
     if: github.ref == 'refs/heads/master'
 
     steps:
