@@ -39,7 +39,7 @@ resource "aws_ecs_cluster" "default" {
 # Task definition for the application
 
 resource "aws_ecs_task_definition" "short_stuff" {
-  family                   = "${var.environment_name}-${var.name}-td"
+  family                   = "${var.environment_name}-${var.name}"
   requires_compatibilities = ["FARGATE"]
   cpu                      = var.ecs_fargate_application_cpu
   memory                   = var.ecs_fargate_application_mem
