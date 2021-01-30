@@ -23,7 +23,6 @@ Let's light this candle
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-
 ## Production-like environment
 
 **Prerequisites**
