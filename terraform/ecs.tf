@@ -52,6 +52,9 @@ resource "aws_ecs_task_definition" "short_stuff" {
   network_mode             = "awsvpc"
   execution_role_arn       = aws_iam_role.ecs_task_exec_role.arn
   container_definitions    = data.template_file.task_template_secretsmanager.rendered
+  tags = {
+    Environment = var.environment_name
+  }
 }
 
 
