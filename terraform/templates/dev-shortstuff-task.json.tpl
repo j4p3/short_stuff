@@ -10,7 +10,19 @@
     "secrets": [
       {
         "name": "DB_PASSWORD",
-        "valueFrom": "${db_password}"
+        "valueFrom": "${db_password_secret}"
+      },
+      {
+        "name": "SECRET_KEY_BASE",
+        "valueFrom": "${secret_key_base_secret}"
+      },
+      {
+        "name": "SIGNING_SALT",
+        "valueFrom": "${signing_salt_secret}"
+      },
+      {
+        "name": "ADMIN_PASSWORD",
+        "valueFrom": "${admin_password_secret}"
       }
     ],
     "environment": [
@@ -31,12 +43,8 @@
         "value": "${hostname}"
       },
       {
-        "name": "SECRET_KEY_BASE",
-        "value": "${secret_key_base}"
-      },
-      {
-        "name": "SIGNING_SALT",
-        "value": "${signing_salt}"
+        "name": "ADMIN_USER",
+        "value": "${admin_user}"
       }
     ],
     "logConfiguration": {

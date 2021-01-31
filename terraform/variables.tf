@@ -74,6 +74,16 @@ variable "secret_key_base" {
   description = "Phoenix security value"
 }
 
+variable "admin_user" {
+  type        = string
+  description = "Email of default admin"
+}
+
+variable "admin_password" {
+  type        = string
+  description = "Password of default admin"
+}
+
 variable "signing_salt" {
   type        = string
   description = "Phoenix security value"
