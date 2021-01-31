@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- jp.bonner@bonner.jp if you want to help and hold, my bully boys, hold -->
+    <!--
+      jp.bonner@bonner.jp if you want to help
+     -->
 
     <meta charset="utf-8">
     <title>is the squeeze squozen yet?</title>
@@ -19,17 +21,18 @@
     <meta property="og:url" content="https://isthesqueezesquoze.com/">
     <meta property="og:title" content="is the squeeze squoze yet?">
     <meta property="og:description" content="<%= squeeze_status_answer() %>">
-    <meta property="og:image" content="https://isthesqueezesquoze.com/no.png">
+    <meta property="og:image" content="https://isthesqueezesquoze.com/<%= squeeze_status_answer() %>.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://isthesqueezesquoze.com/">
     <meta property="twitter:title" content="is the squeeze squoze yet?">
     <meta property="twitter:description" content="<%= squeeze_status_answer() %>">
-    <meta property="twitter:image" content="https://isthesqueezesquoze.com/no.png">
+    <meta property="twitter:image" content="https://isthesqueezesquoze.com/<%= squeeze_status_answer() %>.png">
 
     <!-- Apple -->
-    <link rel="apple-touch-icon" href="https://isthesqueezesquoze.com/no.png">
+    <link rel="apple-touch-icon" href="https://isthesqueezesquoze.com/<%= squeeze_status_answer() %>.png">
+
 
     <%= csrf_meta_tag() %>
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>

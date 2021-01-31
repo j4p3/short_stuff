@@ -47,8 +47,14 @@ defmodule ShortStuffWeb.Endpoint do
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
 
+  plug :x_clacks_overhead
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
   plug ShortStuffWeb.Router
+
+  def x_clacks_overhead(conn, _opts) do
+    conn
+    |> Plug.Conn.put_resp_header("X-Clacks-Overhead", "GNU Terry Pratchett")
+  end
 end

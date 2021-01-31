@@ -5,7 +5,7 @@ defmodule ShortStuff.MixProject do
     [
       app: :short_stuff,
       version: "0.2.1",
-      elixir: "~> 1.7",
+      elixir: "~> 1.11",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
