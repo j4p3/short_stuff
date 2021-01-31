@@ -34,6 +34,7 @@ resource "aws_cloudwatch_log_group" "short_stuff" {
 resource "aws_ecs_cluster" "default" {
   depends_on = [aws_cloudwatch_log_group.short_stuff]
   name       = "${var.environment_name}-${var.name}"
+  capacity_providers = [ "FARGATE" ]
 }
 
 # Task definition for the application
@@ -48,9 +49,6 @@ resource "aws_ecs_task_definition" "short_stuff" {
   container_definitions    = <<DEFINITION
 [
   {
-    "environment": [
-      {"name": "SECRET_KEY_BASE", "value": "generate one with mix phx.gen.secret"}
-    ],
     "image": "${aws_ecr_repository.short_stuff.repository_url}:latest",
     "name": "${var.environment_name}-${var.name}",
     "portMappings": [
