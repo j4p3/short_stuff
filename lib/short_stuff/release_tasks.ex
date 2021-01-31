@@ -14,6 +14,16 @@ defmodule ShortStuff.ReleaseTasks do
     {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :down, to: version))
   end
 
+  def create_admin(email, password) do
+    %ShortStuff.Users.User{}
+    |> ShortStuff.Users.User.changeset(%{
+      email: email,
+      password: password,
+      password_confirmation: password
+    })
+    |> ShortStuff.Repo.insert()
+  end
+
   defp repos do
     Application.fetch_env!(@app, :ecto_repos)
   end

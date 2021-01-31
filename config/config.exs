@@ -32,6 +32,11 @@ config :kaffy,
   ecto_repo: ShortStuff.Repo,
   router: ShortStuffWeb.Router
 
+# Authentication
+config :short_stuff, :pow,
+  user: ShortStuff.Users.User,
+  repo: ShortStuff.Repo
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

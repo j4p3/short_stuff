@@ -1,6 +1,7 @@
 defmodule ShortStuffWeb.Router do
   use ShortStuffWeb, :router
-  use Kaffy.Routes, scope: "/admin" #, pipe_through: [:authenticate]
+  use Kaffy.Routes, scope: "/admin", pipe_through: [:browser, :protected]
+  use Pow.Phoenix.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -15,12 +16,19 @@ defmodule ShortStuffWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/health", ShortStuffWeb do
+  pipeline :protected do
+    plug Pow.Plug.RequireAuthenticated,
+      error_handler: Pow.Phoenix.PlugErrorHandler
+  end
 
+  scope "/" do
+    pipe_through :browser
+
+    pow_routes()
   end
 
   scope "/", ShortStuffWeb do
-    pipe_through :browser
+    pipe_through [:browser]
 
     live "/", PageLive, :index
   end

@@ -60,6 +60,7 @@ defmodule ShortStuffWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Pow.Plug.Session, otp_app: :short_stuff
   plug ShortStuffWeb.Router
 
   def x_clacks_overhead(conn, _opts) do

@@ -4,10 +4,10 @@ defmodule ShortStuff.Shorts.Info do
   import Ecto.Query
 
   schema "infos" do
-    field :borrow_availability, :integer
-    field :notes, {:array, :string}
+    field :borrow_availability, :integer, default: 0
+    field :notes, {:array, :string}, default: []
     field :short_interest, :integer
-    field :source, :string
+    field :source, :string, default: nil
 
     timestamps()
   end

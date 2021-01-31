@@ -10,7 +10,8 @@ defmodule ShortStuff.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      xref: [exclude: :mnesia]
     ]
   end
 
@@ -49,7 +50,8 @@ defmodule ShortStuff.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:cowboy, "~> 2.7.0"},
       {:timex, "~> 3.6"},
-      {:kaffy, "~> 0.9"}
+      {:kaffy, "~> 0.9"},
+      {:pow, "~> 1.0.22"}
     ]
   end
 
