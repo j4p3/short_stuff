@@ -44,43 +44,43 @@ resource "aws_ecs_cluster" "default" {
 
 # Task definition for the application
 
-# resource "aws_ecs_task_definition" "short_stuff" {
-#   family                   = "${var.environment_name}-${var.name}"
-#   requires_compatibilities = ["FARGATE"]
-#   cpu                      = var.ecs_fargate_application_cpu
-#   memory                   = var.ecs_fargate_application_mem
-#   network_mode             = "awsvpc"
-#   execution_role_arn       = aws_iam_role.ecs_task_exec_role.arn
-#   container_definitions    = data.template_file.task_template_secretsmanager.rendered
-# }
+resource "aws_ecs_task_definition" "short_stuff" {
+  family                   = "${var.environment_name}-${var.name}"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = var.ecs_fargate_application_cpu
+  memory                   = var.ecs_fargate_application_mem
+  network_mode             = "awsvpc"
+  execution_role_arn       = aws_iam_role.ecs_task_exec_role.arn
+  container_definitions    = data.template_file.task_template_secretsmanager.rendered
+}
 
 
-# resource "aws_ecs_service" "short_stuff" {
-#   name            = "${var.environment_name}-${var.name}-service"
-#   cluster         = aws_ecs_cluster.default.id
-#   launch_type     = "FARGATE"
-#   task_definition = aws_ecs_task_definition.short_stuff.arn
-#   desired_count   = var.ecs_application_count
+resource "aws_ecs_service" "short_stuff" {
+  name            = "${var.environment_name}-${var.name}-service"
+  cluster         = aws_ecs_cluster.default.id
+  launch_type     = "FARGATE"
+  task_definition = aws_ecs_task_definition.short_stuff.arn
+  desired_count   = var.ecs_application_count
 
-#   load_balancer {
-#     target_group_arn = aws_lb_target_group.short_stuff.arn
-#     container_name   = "${var.environment_name}-${var.name}"
-#     container_port   = 4000
-#   }
+  load_balancer {
+    target_group_arn = aws_lb_target_group.short_stuff.arn
+    container_name   = "${var.environment_name}-${var.name}"
+    container_port   = 4000
+  }
 
-#   network_configuration {
-#     assign_public_ip = false
+  network_configuration {
+    assign_public_ip = false
 
-#     security_groups = [
-#       aws_security_group.egress-all.id,
-#       aws_security_group.short_stuff-service.id
-#     ]
-#     subnets = [aws_subnet.private.id]
-#   }
+    security_groups = [
+      aws_security_group.egress-all.id,
+      aws_security_group.short_stuff-service.id
+    ]
+    subnets = [aws_subnet.private.id]
+  }
 
-#   depends_on = [
-#     aws_lb_listener.short_stuff_http,
-#     aws_lb_listener.short_stuff_https,
-#     aws_ecs_task_definition.short_stuff
-#   ]
-# }
+  depends_on = [
+    aws_lb_listener.short_stuff_http,
+    aws_lb_listener.short_stuff_https,
+    aws_ecs_task_definition.short_stuff
+  ]
+}
