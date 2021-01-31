@@ -6,8 +6,12 @@ defmodule ShortStuff.Shorts.Squeeze do
   end
 
   def si_delta() do
-    [now, prev] = ShortStuff.Shorts.Info.last_two
-    prev.short_interest - now.short_interest
+    case ShortStuff.Shorts.Info.last_two do
+      [now, prev] ->
+        prev.short_interest - now.short_interest
+      [] ->
+        0
+    end
   end
 
   defp high_day_delta?() do
