@@ -38,6 +38,7 @@ npm-debug.log
 
 # sekrits
 .env
+dns/dns.json
 
 # Elixir
 *.beam
