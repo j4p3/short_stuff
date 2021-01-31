@@ -48,7 +48,8 @@ defmodule ShortStuff.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:cowboy, "~> 2.7.0"},
-      {:timex, "~> 3.6"}
+      {:timex, "~> 3.6"},
+      {:kaffy, "~> 0.9"}
     ]
   end
 

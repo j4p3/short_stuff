@@ -1,5 +1,6 @@
 defmodule ShortStuffWeb.Router do
   use ShortStuffWeb, :router
+  use Kaffy.Routes, scope: "/admin" #, pipe_through: [:authenticate]
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -12,6 +13,10 @@ defmodule ShortStuffWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  scope "/health", ShortStuffWeb do
+
   end
 
   scope "/", ShortStuffWeb do
