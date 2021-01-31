@@ -4,7 +4,7 @@ resource "aws_db_instance" "default" {
   engine_version    = var.db_engine_version
   instance_class    = var.db_instance_type
   name              = var.db_name
-  username          = var.db_username
+  username          = var.db_user
   password          = var.db_password
 
   availability_zone = var.aws_default_zone

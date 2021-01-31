@@ -9,22 +9,34 @@
       ],
       "secrets": [
       {
-        "name": "DATABASE_URL",
-        "valueFrom": "${database_url}"
+        "name": "DB_PASSWORD",
+        "valueFrom": "${db_password}"
       },
       "environment": [
         {
-          "name": "db_name",
+          "name": "DB_NAME",
           "value": "${db_name}"
         },
         {
-          "name": "db_username",
-          "value": "${db_username}"
+          "name": "DB_USER",
+          "value": "${db_user}"
         },
         {
-          "name": "db_host",
+          "name": "DB_HOST",
           "value": "${db_host}"
-        }
+        },
+        {
+          "name": "HOSTNAME",
+          "value": "${hostname}"
+        },
+        {
+          "name": "SECRET_KEY_BASE",
+          "value": "${secret_key_base}"
+        },
+        {
+          "name": "SIGNING_SALT",
+          "value": "${signing_salt}
+        "}
       ]
     ]
     "logConfiguration": {

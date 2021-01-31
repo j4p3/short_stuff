@@ -49,14 +49,34 @@ variable "db_name" {
   description = "Name of the db"
 }
 
-variable "db_username" {
+variable "db_user" {
   type        = string
   description = "Name of the DB user"
 }
 
 variable "db_password" {
   type        = string
-  description = "Name of the DB user"
+  description = "Password of the DB user"
+}
+
+variable "db_host" {
+  type        = string
+  description = "Host of the DB"
+}
+
+variable "hostname" {
+  type        = string
+  description = "Hostname the app is being served from"
+}
+
+variable "secret_key_base" {
+  type        = string
+  description = "Phoenix security value"
+}
+
+variable "signing_salt" {
+  type        = string
+  description = "Phoenix security value"
 }
 
 variable "ecs_fargate_application_cpu" {

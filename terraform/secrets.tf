@@ -2,14 +2,17 @@ data "template_file" "task_template_secretsmanager" {
   template = file("./templates/${var.environment_name}-${var.name}-task.json.tpl")
 
   vars = {
-    db_name        = var.db_name
-    db_username    = var.db_username
-    db_host        = aws_db_instance.default.address
-    db_password    = aws_secretsmanager_secret.database_password_secret.arn
-    repository_url = aws_ecr_repository.short_stuff.repository_url
-    task_name      = "${var.environment_name}-${var.name}"
-    log_group      = aws_cloudwatch_log_group.short_stuff.name
-    log_region     = var.aws_region
+    db_name         = var.db_name
+    db_user         = var.db_user
+    db_host         = aws_db_instance.default.address
+    db_password     = aws_secretsmanager_secret.database_password_secret.arn
+    hostname        = var.hostname
+    repository_url  = aws_ecr_repository.short_stuff.repository_url
+    task_name       = "${var.environment_name}-${var.name}"
+    log_group       = aws_cloudwatch_log_group.short_stuff.name
+    log_region      = var.aws_region
+    secret_key_base = var.secret_key_base
+    signing_salt    = var.signing_salt
   }
 }
 
