@@ -11,6 +11,8 @@ defmodule ShortStuff.Diagnostics do
     IO.puts("DB_HOST: #{System.get_env("DB_HOST")}")
     IO.puts("ADMIN_USER: #{System.get_env("ADMIN_USER")}")
     IO.puts("ADMIN_PASSWORD: #{present("ADMIN_PASSWORD")}")
+    IO.puts("AWS_ACCESS_KEY_ID: #{System.get_env("AWS_ACCESS_KEY_ID")}")
+    IO.puts("AWS_SECRET_ACCESS_KEY: #{present("AWS_SECRET_ACCESS_KEY")}")
     IO.puts("============================")
   end
 

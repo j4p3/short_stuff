@@ -11,7 +11,15 @@ Let's light this candle
 
 **Env variables**
 
-* `DATABASE_URL`
+* `MIX_ENV`
+* `DB_NAME`
+* `DB_USER`
+* `DB_PASSWORD`
+* `DB_HOST`
+* `ADMIN_USER`
+* `ADMIN_PASSWORD`
+* `AWS_ACCESS_KEY_ID`
+* `AWS_SECRET_ACCESS_KEY`
 
 **Steps**
 
