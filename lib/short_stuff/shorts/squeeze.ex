@@ -9,6 +9,8 @@ defmodule ShortStuff.Shorts.Squeeze do
     case ShortStuff.Shorts.Info.last_two do
       [now, prev] ->
         prev.short_interest - now.short_interest
+      [_] ->
+        0
       [] ->
         0
     end

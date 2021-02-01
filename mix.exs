@@ -51,7 +51,8 @@ defmodule ShortStuff.MixProject do
       {:cowboy, "~> 2.7.0"},
       {:timex, "~> 3.6"},
       {:kaffy, "~> 0.9"},
-      {:pow, "~> 1.0.22"}
+      {:pow, "~> 1.0.22"},
+      {:ex_aws, "~> 2.1"},
     ]
   end
 
