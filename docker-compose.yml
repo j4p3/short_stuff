@@ -18,6 +18,8 @@ services:
       - "4000:4000"
     depends_on:
       - db
+    environment:
+      DB_HOST: db
     env_file:
       - .env
     ports:

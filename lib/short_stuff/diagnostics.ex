@@ -13,6 +13,9 @@ defmodule ShortStuff.Diagnostics do
     IO.puts("ADMIN_PASSWORD: #{present("ADMIN_PASSWORD")}")
     IO.puts("AWS_ACCESS_KEY_ID: #{System.get_env("AWS_ACCESS_KEY_ID")}")
     IO.puts("AWS_SECRET_ACCESS_KEY: #{present("AWS_SECRET_ACCESS_KEY")}")
+    IO.puts("TWILIO_ACCOUNT_ID: #{System.get_env("TWILIO_ACCOUNT_ID")}")
+    IO.puts("TWILIO_AUTH_TOKEN: #{present("TWILIO_AUTH_TOKEN")}")
+    IO.puts("TWILIO_NOTIFY_SERVICE_ID: #{System.get_env("TWILIO_NOTIFY_SERVICE_ID")}")
     IO.puts("============================")
   end
 
