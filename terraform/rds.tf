@@ -1,12 +1,12 @@
-resource "aws_db_instance" "default" {
+resource "aws_db_instance" "main" {
+  identifier        = format("%s%s", var.name, var.environment)
   allocated_storage = var.db_storage
   engine            = var.db_engine
   engine_version    = var.db_engine_version
   instance_class    = var.db_instance_type
-  name              = var.db_name
-  username          = var.db_user
+  name              = format("%s%s", var.name, var.environment)
+  username          = format("%s%s", var.name, var.environment)
   password          = var.db_password
-  apply_immediately = true
 
   availability_zone = var.aws_default_zone
 
@@ -15,7 +15,7 @@ resource "aws_db_instance" "default" {
   db_subnet_group_name   = aws_db_subnet_group.default.name
 
   tags = {
-    App         = var.name
-    Environment = var.environment_name
+    app         = var.name
+    environment = var.environment
   }
 }

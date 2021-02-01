@@ -1,3 +1,8 @@
-resource "aws_ecr_repository" "short_stuff" {
-  name = "${var.environment_name}-${var.name}"
+resource "aws_ecr_repository" "shortstuff" {
+  name = "${var.name}-${var.environment}"
+
+  tags = {
+    app         = var.name
+    environment = var.environment
+  }
 }

@@ -1,5 +1,5 @@
-resource "aws_lb" "short_stuff" {
-  name = "${var.environment_name}-${var.name}"
+resource "aws_lb" "shortstuff" {
+  name = "${var.name}-${var.environment}"
 
   subnets = [
     aws_subnet.public.id,
@@ -13,24 +13,26 @@ resource "aws_lb" "short_stuff" {
   ]
 
   tags = {
-    Environment = var.environment_name
+    app         = var.name
+    environment = var.environment
   }
 }
 
-resource "aws_acm_certificate" "short_stuff" {
+resource "aws_acm_certificate" "shortstuff" {
   domain_name       = "isthesqueezesquoze.com"
   validation_method = "DNS"
-
-  tags = {
-    Environment = var.environment_name
-  }
 
   lifecycle {
     create_before_destroy = true
   }
+
+  tags = {
+    app         = var.name
+    environment = var.environment
+  }
 }
 
-resource "aws_lb_target_group" "short_stuff" {
+resource "aws_lb_target_group" "shortstuff" {
   port        = "4000"
   protocol    = "HTTP"
   vpc_id      = aws_vpc.default.id
@@ -45,20 +47,21 @@ resource "aws_lb_target_group" "short_stuff" {
     timeout = 25
   }
 
-  tags = {
-    Environment = var.environment_name
-  }
+  depends_on = [aws_lb.shortstuff]
 
-  depends_on = [aws_lb.short_stuff]
+  tags = {
+    app         = var.name
+    environment = var.environment
+  }
 }
 
-resource "aws_lb_listener" "short_stuff_http" {
-  load_balancer_arn = aws_lb.short_stuff.arn
+resource "aws_lb_listener" "shortstuff_http" {
+  load_balancer_arn = aws_lb.shortstuff.arn
   port              = "80"
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = aws_lb_target_group.short_stuff.arn
+    target_group_arn = aws_lb_target_group.shortstuff.arn
     type             = "forward"
   }
 
@@ -73,16 +76,16 @@ resource "aws_lb_listener" "short_stuff_http" {
   # }
 }
 
-resource "aws_lb_listener" "short_stuff_https" {
-  load_balancer_arn = aws_lb.short_stuff.arn
+resource "aws_lb_listener" "shortstuff_https" {
+  load_balancer_arn = aws_lb.shortstuff.arn
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate.short_stuff.arn
+  certificate_arn   = aws_acm_certificate.shortstuff.arn
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.short_stuff.arn
+    target_group_arn = aws_lb_target_group.shortstuff.arn
   }
 }
 

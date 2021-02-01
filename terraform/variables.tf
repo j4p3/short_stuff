@@ -4,10 +4,10 @@ variable "name" {
   default     = "shortstuff"
 }
 
-variable "environment_name" {
+variable "environment" {
   type        = string
   description = "Current environment"
-  default     = "development"
+  default     = "dev"
 }
 
 variable "aws_region" {
@@ -44,29 +44,9 @@ variable "db_instance_type" {
   default     = "db.t3.large"
 }
 
-variable "db_name" {
-  type        = string
-  description = "Name of the db"
-}
-
-variable "db_user" {
-  type        = string
-  description = "Name of the DB user"
-}
-
 variable "db_password" {
   type        = string
   description = "Password of the DB user"
-}
-
-variable "db_host" {
-  type        = string
-  description = "Host of the DB"
-}
-
-variable "hostname" {
-  type        = string
-  description = "Hostname the app is being served from"
 }
 
 variable "secret_key_base" {

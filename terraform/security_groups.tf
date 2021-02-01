@@ -9,6 +9,11 @@ resource "aws_security_group" "http" {
     protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    app         = var.name
+    environment = var.environment
+  }
 }
 
 resource "aws_security_group" "https" {
@@ -21,6 +26,11 @@ resource "aws_security_group" "https" {
     to_port     = 443
     protocol    = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    app         = var.name
+    environment = var.environment
   }
 }
 
@@ -35,10 +45,15 @@ resource "aws_security_group" "egress-all" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    app         = var.name
+    environment = var.environment
+  }
 }
 
-resource "aws_security_group" "short_stuff_service" {
-  name   = "${var.environment_name}-${var.name}-ecs-service"
+resource "aws_security_group" "shortstuff_service" {
+  name   = "${var.name}-${var.environment}-ecs-service"
   vpc_id = aws_vpc.default.id
 
   ingress {
@@ -54,10 +69,15 @@ resource "aws_security_group" "short_stuff_service" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    app         = var.name
+    environment = var.environment
+  }
 }
 
 resource "aws_security_group" "db" {
-  name        = "${var.environment_name}-${var.name}-db"
+  name        = "${var.name}-${var.environment}-db"
   description = "Security group for database"
   vpc_id      = aws_vpc.default.id
 
@@ -65,7 +85,7 @@ resource "aws_security_group" "db" {
     from_port       = 5432
     to_port         = 5432
     protocol        = "tcp"
-    security_groups = [aws_security_group.short_stuff_service.id]
+    security_groups = [aws_security_group.shortstuff_service.id]
   }
 
   egress {
@@ -77,5 +97,10 @@ resource "aws_security_group" "db" {
 
   lifecycle {
     create_before_destroy = true
+  }
+
+  tags = {
+    app         = var.name
+    environment = var.environment
   }
 }

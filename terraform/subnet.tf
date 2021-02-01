@@ -4,7 +4,8 @@ resource "aws_subnet" "public" {
   availability_zone = "${var.aws_region}a"
 
   tags = {
-    Environment = var.environment_name
+    app         = var.name
+    environment = var.environment
   }
 }
 
@@ -14,7 +15,8 @@ resource "aws_subnet" "private" {
   availability_zone = "${var.aws_region}c"
 
   tags = {
-    Environment = var.environment_name
+    app         = var.name
+    environment = var.environment
   }
 }
 
@@ -24,7 +26,8 @@ resource "aws_subnet" "db_a" {
   availability_zone = "${var.aws_region}a"
 
   tags = {
-    Environment = var.environment_name
+    app         = var.name
+    environment = var.environment
   }
 }
 
@@ -34,17 +37,19 @@ resource "aws_subnet" "db_b" {
   availability_zone = "${var.aws_region}c"
 
   tags = {
-    Environment = var.environment_name
+    app         = var.name
+    environment = var.environment
   }
 }
 
 
 resource "aws_db_subnet_group" "default" {
-  name        = "${var.environment_name}-${var.name}-db"
+  name        = "${var.name}-${var.environment}-db"
   description = "Subnet group for DB"
   subnet_ids  = [aws_subnet.db_a.id, aws_subnet.db_b.id]
 
   tags = {
-    Environment = var.environment_name
+    app         = var.name
+    environment = var.environment
   }
 }

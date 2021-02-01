@@ -4,7 +4,7 @@
 #   name = "isthesqueezesquoze.com."
 
 #   tags = {
-#     Environment = "prod"
+#     environment = "prod"
 #   }
 # }
 
@@ -12,7 +12,7 @@
 #   name = "dev.isthesqueezesquoze.com"
 
 #   tags = {
-#     Environment = "dev"
+#     environment = "dev"
 #   }
 # }
 
@@ -63,7 +63,7 @@
 #   name    = "dev.isthesqueezesquoze.com"
 #   type    = "CNAME"
 #   ttl     = "60"
-#   records = [aws_lb.short_stuff.dns_name]
+#   records = [aws_lb.shortstuff.dns_name]
 # }
 
 # resource "aws_route53_record" "alias_route53_record" {
@@ -72,12 +72,12 @@
 #   type    = "A"
 
 #   alias {
-#     name                   = "${aws_lb.short_stuff.dns_name}"
-#     zone_id                = "${aws_lb.short_stuff.zone_id}"
+#     name                   = "${aws_lb.shortstuff.dns_name}"
+#     zone_id                = "${aws_lb.shortstuff.zone_id}"
 #     evaluate_target_health = true
 #   }
 
 #   tags = {
-#     Environment = "prod"
+#     environment = "prod"
 #   }
 # }

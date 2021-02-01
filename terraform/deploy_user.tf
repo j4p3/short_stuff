@@ -1,8 +1,13 @@
 resource "aws_iam_user" "ci_user" {
-  name = "short-stuff-ci-deploy-user"
+  name = "${var.name}-${var.environment}_deploy_user"
+
+  tags = {
+    app         = var.name
+    environment = var.environment
+  }
 }
 
-resource "aws_iam_user_policy" "ci_ecr_access_2" {
+resource "aws_iam_user_policy" "ci_ecr_access" {
   user = aws_iam_user.ci_user.name
 
   policy = <<EOF
@@ -21,14 +26,14 @@ resource "aws_iam_user_policy" "ci_ecr_access_2" {
         "ecr:*"
       ],
       "Effect": "Allow",
-      "Resource": "${aws_ecr_repository.short_stuff.arn}"
+      "Resource": "${aws_ecr_repository.shortstuff.arn}"
     }
   ]
 }
 EOF
 }
 
-resource "aws_iam_user_policy" "ecs-fargate-deploy" {
+resource "aws_iam_user_policy" "ecs_fargate_deploy" {
   user = aws_iam_user.ci_user.name
 
   policy = <<POLICY
