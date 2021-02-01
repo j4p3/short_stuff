@@ -43,10 +43,6 @@
         "value": "${db_host}"
       },
       {
-        "name": "HOSTNAME",
-        "value": "${hostname}"
-      },
-      {
         "name": "ADMIN_USER",
         "value": "${admin_user}"
       }

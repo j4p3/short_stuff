@@ -44,6 +44,15 @@ resource "aws_cloudwatch_log_group" "shortstuff" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "shortstuff_networking" {
+  name = "/networking/${var.name}-${var.environment}"
+
+  tags = {
+    app         = var.name
+    environment = var.environment
+  }
+}
+
 # Cluster
 
 resource "aws_ecs_cluster" "default" {
@@ -89,7 +98,7 @@ resource "aws_ecs_service" "shortstuff" {
   }
 
   network_configuration {
-    assign_public_ip = true
+    assign_public_ip = false
 
     security_groups = [
       aws_security_group.egress-all.id,

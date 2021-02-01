@@ -6,7 +6,6 @@ data "template_file" "task_template_secretsmanager" {
     db_name                = aws_db_instance.main.name
     db_user                = aws_db_instance.main.username
     db_host                = aws_db_instance.main.address
-    hostname               = aws_lb.shortstuff.dns_name
     repository_url         = aws_ecr_repository.shortstuff.repository_url
     task_name              = "${var.name}-${var.environment}"
     log_group              = aws_cloudwatch_log_group.shortstuff.name
