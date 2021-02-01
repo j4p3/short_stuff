@@ -16,6 +16,13 @@ defmodule ShortStuffWeb.PageLive do
     human_string
   end
 
+  def datetime_format(datetime) do
+    {:ok, human_string} = datetime
+    |> Timex.Timezone.convert("America/New_York")
+    |> Timex.format("%H:%M %m/%d", :strftime)
+    human_string
+  end
+
   # Lifecycle functions & live event handlers
   @impl true
   def mount(_params, _session, socket) do

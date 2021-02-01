@@ -94,7 +94,7 @@ resource "aws_secretsmanager_secret_version" "admin_password_version" {
 }
 
 resource "aws_iam_policy" "password_policy_secretsmanager" {
-  name = "password-policy-secretsmanager"
+  name = "${var.name}-${var.environment}-password-policy-secretsmanager"
 
   policy = data.aws_iam_policy_document.password_policy_secretsmanager.json
 }

@@ -53,8 +53,8 @@ defmodule ShortStuff.MixProject do
       {:kaffy, "~> 0.9"},
       {:pow, "~> 1.0.22"},
       {:ex_aws, "~> 2.1"},
-      {:ex_aws_sns, "~> 2.0"},
-      {:sweet_xml, "~> 0.6"}
+      {:sweet_xml, "~> 0.6"},
+      {:tesla, "~> 1.4.0"},
     ]
   end
 

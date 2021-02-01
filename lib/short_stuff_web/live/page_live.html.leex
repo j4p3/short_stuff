@@ -18,20 +18,18 @@
     </h1>
   </main>
   <section>
-    <p>GME shorts <span class="live"><%= did_it_or_not("have") %></span> begun to close their positions in substantial numbers.</p>
-    <h3>the situation:</h3>
+    <h3>the situation (<%= datetime_format(@short_info.updated_at) %>):</h3>
     <p>
       <ul>
         <li><b>short interest: </b>
-        <span class="live"><%= @short_info.short_interest %> </span>
-        <span>(<%= @short_info.source %>)</span>
+          <span class="live"><%= @short_info.short_interest %>m </span>
+          <span>(<%= @short_info.source %>)</span>
+          <p><%= @short_info.short_interest_description %></>
         </li>
-        <li><b>change in short share availability:</b>
-          <span class="live"><%= @short_info.borrow_availability %></span>
+        <li><b>borrow availability (Interactive Brokers): </b>
+          <span class="live"> <%= @short_info.borrow_availability %> </span>
         </li>
-        <%= for note <- @short_info.notes do %>
-          <li><%= note %></li>
-        <% end %>
+        <li><%= @short_info.note %></li>
       </ul>
     </p>
   </section>
