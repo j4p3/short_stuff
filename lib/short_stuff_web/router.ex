@@ -33,6 +33,10 @@ defmodule ShortStuffWeb.Router do
     live "/", PageLive, :index
   end
 
+  scope "/health_check" do
+    forward "/", HealthCheck
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ShortStuffWeb do
   #   pipe_through :api

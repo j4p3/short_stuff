@@ -72,11 +72,11 @@ resource "aws_ecs_service" "short_stuff" {
   }
 
   network_configuration {
-    assign_public_ip = false
+    assign_public_ip = true
 
     security_groups = [
       aws_security_group.egress-all.id,
-      aws_security_group.short_stuff-service.id
+      aws_security_group.short_stuff_service.id
     ]
     subnets = [aws_subnet.private.id]
   }
