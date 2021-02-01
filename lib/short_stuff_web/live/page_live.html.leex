@@ -26,6 +26,9 @@
           <span>(<%= @short_info.source %>)</span>
           <p><%= @short_info.short_interest_description %></>
         </li>
+        <li><b>borrow rate (Interactive Brokers): </b>
+          <span class="live"> <%= @short_info.borrow_rate %>% </span>
+        </li>
         <li><b>borrow availability (Interactive Brokers): </b>
           <span class="live"> <%= @short_info.borrow_availability %> </span>
         </li>
