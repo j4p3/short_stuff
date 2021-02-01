@@ -6,6 +6,8 @@ defmodule ShortStuff.Application do
   use Application
 
   def start(_type, _args) do
+    ShortStuff.Diagnostics.run()
+
     children = [
       # Start the Ecto repository
       ShortStuff.Repo,
