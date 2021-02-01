@@ -65,11 +65,11 @@ resource "aws_ecs_service" "short_stuff" {
   task_definition = aws_ecs_task_definition.short_stuff.arn
   desired_count   = var.ecs_application_count
 
-  load_balancer {
-    target_group_arn = aws_lb_target_group.short_stuff.arn
-    container_name   = "${var.environment_name}-${var.name}"
-    container_port   = 4000
-  }
+  # load_balancer {
+  #   target_group_arn = aws_lb_target_group.short_stuff.arn
+  #   container_name   = "${var.environment_name}-${var.name}"
+  #   container_port   = 4000
+  # }
 
   network_configuration {
     assign_public_ip = true

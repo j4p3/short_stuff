@@ -27,6 +27,10 @@
     ],
     "environment": [
       {
+        "name": "MIX_ENV",
+        "value": "${mix_env}"
+      },
+      {
         "name": "DB_NAME",
         "value": "${db_name}"
       },

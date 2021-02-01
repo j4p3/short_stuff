@@ -2,6 +2,7 @@ data "template_file" "task_template_secretsmanager" {
   template = file("./templates/${var.environment_name}-${var.name}-task.json.tpl")
 
   vars = {
+    mix_env                = var.environment_name
     db_name                = var.db_name
     db_user                = var.db_user
     db_host                = aws_db_instance.default.address
@@ -26,7 +27,7 @@ data "template_file" "task_template_secretsmanager" {
 
 data "aws_iam_policy_document" "password_policy_secretsmanager" {
   statement {
-    actions   = ["secretsmanager:GetSecretValue"]
+    actions = ["secretsmanager:GetSecretValue"]
     resources = [
       aws_secretsmanager_secret.database_password_secret.arn,
       aws_secretsmanager_secret.secret_key_base.arn,

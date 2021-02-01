@@ -33,7 +33,7 @@ defmodule ShortStuffWeb.Router do
     live "/", PageLive, :index
   end
 
-  scope "/health_check" do
+  scope "/health" do
     forward "/", HealthCheck
   end
 
