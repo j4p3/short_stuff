@@ -26,16 +26,16 @@ defmodule ShortStuffWeb.PageLive do
   # Lifecycle functions & live event handlers
   @impl true
   def mount(_params, _session, socket) do
-    ShortStuffWeb.Presence.track(self(), @presence_topic, socket.id, %{})
+    # ShortStuffWeb.Presence.track(self(), @presence_topic, socket.id, %{})
     ShortStuffWeb.Endpoint.subscribe(@presence_topic)
-    present =
-      ShortStuffWeb.Presence.list(@presence_topic)
-      |> map_size()
+    # present =
+    #   ShortStuffWeb.Presence.list(@presence_topic)
+    #   |> map_size()
 
     {:ok,
      assign(socket,
        short_info: ShortStuff.Shorts.Info.last,
-       present: present,
+      #  present: present,
        subscribe_active: false
      )}
   end

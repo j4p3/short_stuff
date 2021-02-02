@@ -15,7 +15,7 @@ defmodule ShortStuff.Application do
       ShortStuffWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: ShortStuff.PubSub},
-      ShortStuffWeb.Presence,
+      # ShortStuffWeb.Presence,
       # Start the Endpoint (http/https)
       ShortStuffWeb.Endpoint
       # Start a worker by calling: ShortStuff.Worker.start_link(arg)
