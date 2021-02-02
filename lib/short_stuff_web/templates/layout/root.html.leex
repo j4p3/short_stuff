@@ -7,11 +7,12 @@
 
     <meta charset="utf-8">
     <title>is the squeeze squoze yet?</title>
+    <%= live_title_tag assigns[:squeeze_status] || "", suffix: " · is it squoze?" %>
 
 
     <!-- Primary Meta Tags -->
     <meta name="title" content="is the squeeze squoze yet?">
-    <meta name="description" content="<%= squeeze_status_answer() %>.">
+    <meta name="description" content="<%= assigns[:squeeze_status] %>.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1c1c1c">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -20,18 +21,19 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://isthesqueezesquoze.com/">
     <meta property="og:title" content="is the squeeze squoze yet?">
-    <meta property="og:description" content="<%= squeeze_status_answer() %>.">
-    <meta property="og:image" content="<%= Routes.static_path(@conn, "/images/#{squeeze_status_answer()}.png") %>"
+    <meta property="og:description" content="<%= assigns[:squeeze_status] %>.">
+    <meta property="og:image" content="<%= Routes.static_path(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
+    <meta property="og:image" content="<%= Routes.static_path(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://isthesqueezesquoze.com/">
     <meta property="twitter:title" content="is the squeeze squoze yet?">
-    <meta property="twitter:description" content="<%= squeeze_status_answer() %>.">
-    <meta property="twitter:image" content="<%= Routes.static_path(@conn, "/images/#{squeeze_status_answer()}.png") %>"
+    <meta property="twitter:description" content="<%= assigns[:squeeze_status] %>.">
+    <meta property="twitter:image" content="<%= Routes.static_path(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
 
     <!-- Apple -->
-    <link rel="apple-touch-icon" href="<%= Routes.static_path(@conn, "/images/#{squeeze_status_answer()}.png") %>"
+    <link rel="apple-touch-icon" href="<%= Routes.static_path(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
 
 
     <%= csrf_meta_tag() %>

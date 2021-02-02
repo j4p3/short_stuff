@@ -1,7 +1,6 @@
 defmodule ShortStuff.Shorts.Info do
   use Ecto.Schema
   import Ecto.Changeset
-  import Ecto.Query
 
   schema "infos" do
     field :short_interest, :integer
@@ -10,6 +9,7 @@ defmodule ShortStuff.Shorts.Info do
     field :note, :string
     field :source, :string, default: nil
     field :borrow_rate, :string
+    field :is_squoze, :boolean
 
     timestamps()
   end
@@ -30,18 +30,5 @@ defmodule ShortStuff.Shorts.Info do
       :borrow_availability,
       :source
       ])
-  end
-
-  def last do
-    __MODULE__
-    |> last
-    |> ShortStuff.Repo.one
-  end
-
-  def last_two do
-    __MODULE__
-    |> order_by(desc: :updated_at)
-    |> limit(2)
-    |> ShortStuff.Repo.all
   end
 end
