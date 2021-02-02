@@ -58,7 +58,7 @@ defmodule ShortStuff.MixProject do
       {:hackney, "~> 1.17"},
       {:jason, "~> 1.0"},
       {:httpoison, "~> 1.8"},
-      {:ex_twilio, "~> 0.8.1"}
+      # {:ex_twilio, "~> 0.8.1"}
     ]
   end
 
