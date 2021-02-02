@@ -37,6 +37,12 @@ config :short_stuff, :pow,
   user: ShortStuff.Users.User,
   repo: ShortStuff.Repo
 
+# Twilio
+config :ex_twilio,
+  account_sid:   {:system, System.get_env("TWILIO_ACCOUNT_ID")},
+  auth_token:    {:system, System.get_env("TWILIO_AUTH_TOKEN")},
+  workspace_sid: {:system, System.get_env("TWILIO_NOTIFY_SERVICE_ID")}
+
 config :tesla, :adapter, Tesla.Adapter.Hackney
 
 # Import environment specific config. This must remain at the bottom

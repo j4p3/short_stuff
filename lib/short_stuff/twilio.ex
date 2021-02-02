@@ -21,6 +21,7 @@ defmodule Twilio do
       body: body,
       headers: [
         {"Accept", "application/json"},
+        {"Content-Type", "application/json"},
         {"Authorization", "Basic #{token}"}
       ]
     }

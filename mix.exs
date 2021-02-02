@@ -21,7 +21,8 @@ defmodule ShortStuff.MixProject do
   def application do
     [
       mod: {ShortStuff.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools],
+      # applications: [:ex_twilio]
     ]
   end
 
@@ -56,7 +57,8 @@ defmodule ShortStuff.MixProject do
       {:tesla, "~> 1.4.0"},
       {:hackney, "~> 1.17"},
       {:jason, "~> 1.0"},
-      {:httpoison, "~> 1.8"}
+      {:httpoison, "~> 1.8"},
+      {:ex_twilio, "~> 0.8.1"}
     ]
   end
 
