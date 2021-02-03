@@ -24,7 +24,7 @@ module "cdn" {
 
   default_cache_behavior = {
     target_origin_id       = "app"
-    viewer_protocol_policy = "allow-all"
+    viewer_protocol_policy = "redirect-to-https"
 
     allowed_methods = ["GET", "HEAD", "OPTIONS"]
     cached_methods  = ["GET", "HEAD"]

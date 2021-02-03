@@ -19,8 +19,8 @@ defmodule ShortStuffWeb.LayoutView do
   # Remove the port from the asset URL in production environments
   defp extract_substring(target_string) do
     if System.get_env("MIX_ENV") != "dev" do
-      Regex.replace(
-      ~r/^(.*):\d*(.*)$/,
+      "https" <> Regex.replace(
+        ~r/^http(:\/\/.*):\d*(.*)$/,
       target_string,
       "\\g{1}\\g{2}"
     )
