@@ -1,13 +1,14 @@
 import Config
 
-hostname = System.fetch_env!("HOSTNAME")
-asset_host = System.fetch_env!("ASSET_HOST")
-db_user = System.fetch_env!("DB_USER")
-db_password = System.fetch_env!("DB_PASSWORD")
-db_host = System.fetch_env!("DB_HOST")
-db_name = System.fetch_env!("DB_NAME")
-secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
-signing_salt = System.fetch_env!("SIGNING_SALT")
+# These values will be overwritten in be release.exs with task-provided values
+hostname = System.get_env("HOSTNAME", "localhost")
+asset_host = System.get_env("ASSET_HOST", "localhost")
+db_user = System.get_env("DB_USER", "postgres")
+db_password = System.get_env("DB_PASSWORD", "postgres")
+db_host = System.get_env("DB_HOST", "localhost")
+db_name = System.get_env("DB_NAME", "short_stuff_dev")
+secret_key_base = System.get_env("SECRET_KEY_BASE", "59yAnQWMFQyF6Kc7r4KmzpWN6EBsAGIcwBlNar1vX9ntgBdZlBiAGm5GmKQrzdYb")
+signing_salt = System.get_env("SIGNING_SALT", "EkjLCEWYBdSDxA+CKuufN0/nKyOF7Wq5")
 
 config :short_stuff, ShortStuff.Repo,
   # ssl: true,
