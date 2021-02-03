@@ -20,7 +20,7 @@ allowed_hosts = [
   "//prod.isthesqueezesquoze.com:4000",
   "//dev.isthesqueezesquoze.com",
   "//dev.isthesqueezesquoze.com:4000",
-  "//isthesqueezesquoze.com"
+  "//isthesqueezesquoze.com",
   "//isthesqueezesquoze.com:4000"
 ]
 
