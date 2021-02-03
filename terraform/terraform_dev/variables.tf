@@ -84,3 +84,18 @@ variable "ecs_application_count" {
   description = "Container count of the application"
   default     = 1
 }
+
+variable "twilio_account_id" {
+  type = string
+  description = "Twilio API credential"
+}
+
+variable "twilio_auth_token" {
+  type = string
+  description = "Twilio API credential"
+}
+
+variable "twilio_notify_service_id" {
+  type = string
+  description = "Twilio API credential"
+}

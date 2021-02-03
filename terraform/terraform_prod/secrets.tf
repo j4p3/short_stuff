@@ -2,19 +2,22 @@ data "template_file" "task_template_secretsmanager" {
   template = file("./templates/${var.name}-${var.environment}-task.json.tpl")
 
   vars = {
-    mix_env                = var.environment
-    db_name                = aws_db_instance.main.name
-    db_user                = aws_db_instance.main.username
-    db_host                = aws_db_instance.main.address
-    repository_url         = aws_ecr_repository.shortstuff.repository_url
-    task_name              = "${var.name}-${var.environment}"
-    log_group              = aws_cloudwatch_log_group.shortstuff.name
-    log_region             = var.aws_region
-    admin_user             = var.admin_user
-    db_password_secret     = aws_secretsmanager_secret.database_password_secret.arn
-    secret_key_base_secret = aws_secretsmanager_secret.secret_key_base.arn
-    signing_salt_secret    = aws_secretsmanager_secret.signing_salt.arn
-    admin_password_secret  = aws_secretsmanager_secret.admin_password.arn
+    mix_env                  = var.environment
+    db_name                  = aws_db_instance.main.name
+    db_user                  = aws_db_instance.main.username
+    db_host                  = aws_db_instance.main.address
+    repository_url           = aws_ecr_repository.shortstuff.repository_url
+    task_name                = "${var.name}-${var.environment}"
+    log_group                = aws_cloudwatch_log_group.shortstuff.name
+    log_region               = var.aws_region
+    admin_user               = var.admin_user
+    twilio_account_id        = var.twilio_account_id
+    twilio_notify_service_id = var.twilio_notify_service_id
+    db_password_secret       = aws_secretsmanager_secret.database_password_secret.arn
+    secret_key_base_secret   = aws_secretsmanager_secret.secret_key_base.arn
+    signing_salt_secret      = aws_secretsmanager_secret.signing_salt.arn
+    admin_password_secret    = aws_secretsmanager_secret.admin_password.arn
+    twilio_auth_token_secret = aws_secretsmanager_secret.twilio_auth_token.arn
   }
 }
 
@@ -32,6 +35,7 @@ data "aws_iam_policy_document" "password_policy_secretsmanager" {
       aws_secretsmanager_secret.secret_key_base.arn,
       aws_secretsmanager_secret.signing_salt.arn,
       aws_secretsmanager_secret.admin_password.arn,
+      aws_secretsmanager_secret.twilio_auth_token.arn,
     ]
   }
 }
@@ -91,6 +95,20 @@ resource "aws_secretsmanager_secret" "admin_password" {
 resource "aws_secretsmanager_secret_version" "admin_password_version" {
   secret_id     = aws_secretsmanager_secret.admin_password.id
   secret_string = var.admin_password
+}
+
+resource "aws_secretsmanager_secret" "twilio_auth_token" {
+  name = "${var.name}-${var.environment}-twilio-auth_token"
+
+  tags = {
+    app         = var.name
+    environment = var.environment
+  }
+}
+
+resource "aws_secretsmanager_secret_version" "twilio_auth_token_version" {
+  secret_id     = aws_secretsmanager_secret.twilio_auth_token.id
+  secret_string = var.twilio_auth_token
 }
 
 resource "aws_iam_policy" "password_policy_secretsmanager" {

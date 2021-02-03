@@ -11,6 +11,9 @@ Let's light this candle
 
 **Env variables**
 
+* `HOSTNAME`
+* `ASSET_HOST`
+* `PORT`
 * `MIX_ENV`
 * `DB_NAME`
 * `DB_USER`

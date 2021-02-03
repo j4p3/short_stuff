@@ -4,6 +4,8 @@
 # remember to add this file to your .gitignore.
 import Config
 
+hostname = System.fetch_env!("HOSTNAME")
+asset_host = System.fetch_env!("ASSET_HOST")
 db_user = System.fetch_env!("DB_USER")
 db_password = System.fetch_env!("DB_PASSWORD")
 db_host = System.fetch_env!("DB_HOST")
@@ -18,7 +20,8 @@ config :short_stuff, ShortStuff.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 config :short_stuff, ShortStuffWeb.Endpoint,
-  url: [host: nil], # allow any host in release
+  url: [host: hostname],
+  static_url: [host: asset_host],
   http: [
     port: String.to_integer(System.get_env("PORT") || "4000"),
     transport_options: [socket_opts: [:inet6]]

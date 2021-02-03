@@ -23,7 +23,12 @@
       {
         "name": "ADMIN_PASSWORD",
         "valueFrom": "${admin_password_secret}"
+      },
+      {
+        "name": "TWILIO_AUTH_TOKEN",
+        "valueFrom": "${twilio_auth_token_secret}"
       }
+      
     ],
     "environment": [
       {
@@ -45,6 +50,14 @@
       {
         "name": "ADMIN_USER",
         "value": "${admin_user}"
+      },
+      {
+        "name": "TWILIO_NOTIFY_SERVICE_ID",
+        "value": "${twilio_notify_service_id}"
+      },
+      {
+        "name": "TWILIO_ACCOUNT_ID",
+        "value": "${twilio_account_id}"
       }
     ],
     "logConfiguration": {

@@ -2,7 +2,7 @@ defmodule ShortStuffWeb.PageLive do
   use ShortStuffWeb, :live_view
   use Timex
 
-  @presence_topic "presence"
+  # @presence_topic "presence"
 
   # Lifecycle functions & live event handlers
   @impl true

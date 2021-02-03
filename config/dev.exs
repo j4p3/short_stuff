@@ -1,11 +1,20 @@
 import Config
 
+hostname = System.get_env("HOSTNAME", "localhost")
+asset_host = System.get_env("ASSET_HOST", "localhost")
+db_user = System.get_env("DB_USER", "postgres")
+db_password = System.get_env("DB_PASSWORD", "postgres")
+db_host = System.get_env("DB_HOST", "localhost")
+db_name = System.get_env("DB_NAME", "short_stuff_dev")
+secret_key_base = System.get_env("SECRET_KEY_BASE", "59yAnQWMFQyF6Kc7r4KmzpWN6EBsAGIcwBlNar1vX9ntgBdZlBiAGm5GmKQrzdYb")
+signing_salt = System.get_env("SIGNING_SALT", "EkjLCEWYBdSDxA+CKuufN0/nKyOF7Wq5")
+
 # Configure your database
 config :short_stuff, ShortStuff.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "short_stuff_dev",
-  hostname: "localhost",
+  username: db_user,
+  password: db_password,
+  database: db_name,
+  hostname: db_host,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
@@ -16,10 +25,11 @@ config :short_stuff, ShortStuff.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :short_stuff, ShortStuffWeb.Endpoint,
+  url: [host: hostname],
+  static_url: [host: asset_host],
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
-  url: [host: "localhost"],
   watchers: [
     node: [
       "node_modules/webpack/bin/webpack.js",
@@ -27,6 +37,14 @@ config :short_stuff, ShortStuffWeb.Endpoint,
       "development",
       "--watch-stdin",
       cd: Path.expand("../assets", __DIR__)
+    ]
+  ],
+  live_reload: [
+    patterns: [
+      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/gettext/.*(po)$",
+      ~r"lib/short_stuff_web/(live|views)/.*(ex)$",
+      ~r"lib/short_stuff_web/templates/.*(eex)$"
     ]
   ]
 
@@ -53,17 +71,6 @@ config :short_stuff, ShortStuffWeb.Endpoint,
 # If desired, both `http:` and `https:` keys can be
 # configured to run both http and https servers on
 # different ports.
-
-# Watch static and templates for browser reloading.
-config :short_stuff, ShortStuffWeb.Endpoint,
-  live_reload: [
-    patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
-      ~r"lib/short_stuff_web/(live|views)/.*(ex)$",
-      ~r"lib/short_stuff_web/templates/.*(eex)$"
-    ]
-  ]
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

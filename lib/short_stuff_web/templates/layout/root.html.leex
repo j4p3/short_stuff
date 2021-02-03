@@ -22,23 +22,23 @@
     <meta property="og:url" content="https://isthesqueezesquoze.com/">
     <meta property="og:title" content="is the squeeze squoze yet?">
     <meta property="og:description" content="<%= assigns[:squeeze_status] %>.">
-    <meta property="og:image" content="<%= Routes.static_path(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
-    <meta property="og:image" content="<%= Routes.static_path(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
+    <meta property="og:image" content="<%= Routes.static_url(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
+    <meta property="og:image" content="<%= Routes.static_url(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://isthesqueezesquoze.com/">
     <meta property="twitter:title" content="is the squeeze squoze yet?">
     <meta property="twitter:description" content="<%= assigns[:squeeze_status] %>.">
-    <meta property="twitter:image" content="<%= Routes.static_path(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
+    <meta property="twitter:image" content="<%= Routes.static_url(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
 
     <!-- Apple -->
-    <link rel="apple-touch-icon" href="<%= Routes.static_path(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
+    <link rel="apple-touch-icon" href="<%= Routes.static_url(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
 
 
     <%= csrf_meta_tag() %>
-    <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
-    <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <link phx-track-static rel="stylesheet" href="<%= Routes.static_url(@conn, "/css/app.css") %>"/>
+    <script defer phx-track-static type="text/javascript" src="<%= Routes.static_url(@conn, "/js/app.js") %>"></script>
 
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -49,6 +49,7 @@
     </script>
   </head>
   <body>
+    <%= img_tag(Routes.static_url(@conn, "/images/phoenix.png")) %>
     <%= @inner_content %>
   </body>
 </html>
