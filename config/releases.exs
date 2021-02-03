@@ -6,6 +6,7 @@ import Config
 
 hostname = System.fetch_env!("HOSTNAME")
 asset_host = System.fetch_env!("ASSET_HOST")
+port = System.get_env("PORT", "4000")
 db_user = System.fetch_env!("DB_USER")
 db_password = System.fetch_env!("DB_PASSWORD")
 db_host = System.fetch_env!("DB_HOST")
@@ -15,13 +16,14 @@ signing_salt = System.fetch_env!("SIGNING_SALT")
 
 allowed_hosts = [
   "//dualstack.shortstuff-prod-92946469.us-west-1.elb.amazonaws.com",
-  "//dualstack.shortstuff-prod-92946469.us-west-1.elb.amazonaws.com:4000",
+  "//dualstack.shortstuff-prod-92946469.us-west-1.elb.amazonaws.com:#{port}",
   "//prod.isthesqueezesquoze.com",
-  "//prod.isthesqueezesquoze.com:4000",
+  "//prod.isthesqueezesquoze.com:#{port}",
   "//dev.isthesqueezesquoze.com",
-  "//dev.isthesqueezesquoze.com:4000",
+  "//dev.isthesqueezesquoze.com:#{port}",
   "//isthesqueezesquoze.com",
-  "//isthesqueezesquoze.com:4000"
+  "//isthesqueezesquoze.com:#{port}",
+  "//localhost:#{port}"
 ]
 
 
@@ -34,7 +36,7 @@ config :short_stuff, ShortStuffWeb.Endpoint,
   url: [host: hostname, port: port],
   static_url: [host: asset_host],
   http: [
-    port: String.to_integer(System.get_env("PORT") || "4000"),
+    port: String.to_integer(port),
     transport_options: [socket_opts: [:inet6]]
   ],
   check_origin: allowed_hosts,

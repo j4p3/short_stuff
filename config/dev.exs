@@ -2,6 +2,7 @@ import Config
 
 hostname = System.get_env("HOSTNAME", "localhost")
 asset_host = System.get_env("ASSET_HOST", "localhost")
+port = System.get_env("PORT", 4000)
 db_user = System.get_env("DB_USER", "postgres")
 db_password = System.get_env("DB_PASSWORD", "postgres")
 db_host = System.get_env("DB_HOST", "localhost")
@@ -11,7 +12,7 @@ signing_salt = System.get_env("SIGNING_SALT", "EkjLCEWYBdSDxA+CKuufN0/nKyOF7Wq5"
 
 allowed_hosts = [
   "//localhost",
-  "//localhost:4000",
+  "//localhost:#{port}",
 ]
 
 # Configure your database
@@ -32,7 +33,7 @@ config :short_stuff, ShortStuff.Repo,
 config :short_stuff, ShortStuffWeb.Endpoint,
   url: [host: hostname],
   static_url: [host: asset_host],
-  http: [port: 4000],
+  http: [port: port],
   debug_errors: true,
   code_reloader: true,
   watchers: [

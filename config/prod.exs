@@ -1,21 +1,11 @@
 import Config
 
-# These values will be overwritten in be release.exs with task-provided values
-hostname = System.get_env("HOSTNAME", "localhost")
-asset_host = System.get_env("ASSET_HOST", "localhost")
-db_user = System.get_env("DB_USER", "postgres")
-db_password = System.get_env("DB_PASSWORD", "postgres")
-db_host = System.get_env("DB_HOST", "localhost")
-db_name = System.get_env("DB_NAME", "short_stuff_dev")
-secret_key_base = System.get_env("SECRET_KEY_BASE", "59yAnQWMFQyF6Kc7r4KmzpWN6EBsAGIcwBlNar1vX9ntgBdZlBiAGm5GmKQrzdYb")
-signing_salt = System.get_env("SIGNING_SALT", "EkjLCEWYBdSDxA+CKuufN0/nKyOF7Wq5")
-
 config :short_stuff, ShortStuff.Repo,
   # ssl: true,
-  username: db_user,
-  password: db_password,
-  database: db_name,
-  hostname: db_host,
+  # username: db_user,
+  # password: db_password,
+  # database: db_name,
+  # hostname: db_host,
   # url: "ecto://#{db_user}:#{db_password}@#{db_host}/#{db_name}",
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
@@ -29,15 +19,15 @@ config :short_stuff, ShortStuff.Repo,
 # before starting your production server.
 #
 config :short_stuff, ShortStuffWeb.Endpoint,
-  url: [host: hostname],
-  static_url: [host: asset_host],
-  cache_static_manifest: "priv/static/cache_manifest.json",
-  http: [
-    port: String.to_integer(System.get_env("PORT") || "4000"),
-    transport_options: [socket_opts: [:inet6]]
-  ],
-  secret_key_base: secret_key_base,
-  live_view: [signing_salt: signing_salt]
+  # url: [host: hostname],
+  # static_url: [host: asset_host],
+  cache_static_manifest: "priv/static/cache_manifest.json"
+  # http: [
+  #   port: String.to_integer(port),
+  #   transport_options: [socket_opts: [:inet6]]
+  # ],
+  # secret_key_base: secret_key_base,
+  # live_view: [signing_salt: signing_salt]
 
 # Do not print debug messages in production
 config :logger, level: :info
