@@ -13,6 +13,17 @@ db_name = System.fetch_env!("DB_NAME")
 secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
 signing_salt = System.fetch_env!("SIGNING_SALT")
 
+allowed_hosts = [
+  "//dualstack.shortstuff-prod-92946469.us-west-1.elb.amazonaws.com",
+  "//dualstack.shortstuff-prod-92946469.us-west-1.elb.amazonaws.com:4000",
+  "//prod.isthesqueezesquoze.com",
+  "//prod.isthesqueezesquoze.com:4000",
+  "//dev.isthesqueezesquoze.com",
+  "//dev.isthesqueezesquoze.com:4000",
+  "//isthesqueezesquoze.com"
+  "//isthesqueezesquoze.com:4000"
+]
+
 
 config :short_stuff, ShortStuff.Repo,
   # ssl: true,
@@ -20,12 +31,13 @@ config :short_stuff, ShortStuff.Repo,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 config :short_stuff, ShortStuffWeb.Endpoint,
-  url: [host: hostname],
+  url: [host: hostname, port: port],
   static_url: [host: asset_host],
   http: [
     port: String.to_integer(System.get_env("PORT") || "4000"),
     transport_options: [socket_opts: [:inet6]]
   ],
+  check_origin: allowed_hosts,
   secret_key_base: secret_key_base,
   live_view: [signing_salt: signing_salt]
 

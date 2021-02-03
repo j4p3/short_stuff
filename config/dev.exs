@@ -9,6 +9,11 @@ db_name = System.get_env("DB_NAME", "short_stuff_dev")
 secret_key_base = System.get_env("SECRET_KEY_BASE", "59yAnQWMFQyF6Kc7r4KmzpWN6EBsAGIcwBlNar1vX9ntgBdZlBiAGm5GmKQrzdYb")
 signing_salt = System.get_env("SIGNING_SALT", "EkjLCEWYBdSDxA+CKuufN0/nKyOF7Wq5")
 
+allowed_hosts = [
+  "//localhost",
+  "//localhost:4000",
+]
+
 # Configure your database
 config :short_stuff, ShortStuff.Repo,
   username: db_user,
