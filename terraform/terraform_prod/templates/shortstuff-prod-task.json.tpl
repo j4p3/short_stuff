@@ -36,6 +36,14 @@
         "value": "${mix_env}"
       },
       {
+        "name": "HOSTNAME",
+        "value": "${hostname}"
+      },
+      {
+        "name": "ASSET_HOST",
+        "value": "${asset_host}"
+      },
+      {
         "name": "DB_NAME",
         "value": "${db_name}"
       },

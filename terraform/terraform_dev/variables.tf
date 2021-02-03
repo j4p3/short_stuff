@@ -10,6 +10,15 @@ variable "environment" {
   default     = "dev"
 }
 
+variable "hostname" {
+  type = string
+  description = "Phoenix endpoint config"
+}
+variable "asset_host" {
+  type = string
+  description = "Phoenix endpoint config"
+}
+
 variable "aws_region" {
   type        = string
   description = "Region of the resources"

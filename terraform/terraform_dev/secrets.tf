@@ -3,6 +3,8 @@ data "template_file" "task_template_secretsmanager" {
 
   vars = {
     mix_env                = var.environment
+    hostname               = var.hostname
+    asset_host             = var.asset_host
     db_name                = aws_db_instance.main.name
     db_user                = aws_db_instance.main.username
     db_host                = aws_db_instance.main.address

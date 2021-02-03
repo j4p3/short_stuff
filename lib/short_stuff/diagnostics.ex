@@ -3,6 +3,9 @@ defmodule ShortStuff.Diagnostics do
     IO.puts("ShortStuff.Diagnostics environment")
     IO.puts("============================")
     IO.puts("MIX_ENV: #{System.get_env("MIX_ENV")}")
+    IO.puts("HOSTNAME: #{System.get_env("HOSTNAME")}")
+    IO.puts("ASSET_HOST: #{System.get_env("ASSET_HOST")}")
+    IO.puts("PORT: #{System.get_env("PORT")}")
     IO.puts("SECRET_KEY_BASE: #{present("SECRET_KEY_BASE")}")
     IO.puts("SIGNING_SALT: #{present("SIGNING_SALT")}")
     IO.puts("DB_PASSWORD: #{present("DB_PASSWORD")}")
@@ -20,6 +23,6 @@ defmodule ShortStuff.Diagnostics do
   end
 
   defp present(key) do
-    if System.get_env(key), do: "present", else: ""
+    if System.get_env(key), do: "present", else: "not present"
   end
 end

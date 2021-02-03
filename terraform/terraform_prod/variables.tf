@@ -85,6 +85,14 @@ variable "ecs_application_count" {
   default     = 1
 }
 
+variable "hostname" {
+  type = string
+  description = "Phoenix endpoint config"
+}
+variable "asset_host" {
+  type = string
+  description = "Phoenix endpoint config"
+}
 
 variable "twilio_account_id" {
   type = string
