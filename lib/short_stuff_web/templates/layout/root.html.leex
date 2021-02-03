@@ -6,7 +6,6 @@
      -->
 
     <meta charset="utf-8">
-    <title>is the squeeze squoze yet?</title>
     <%= live_title_tag assigns[:squeeze_status] || "", suffix: " · is it squoze?" %>
 
 
@@ -35,9 +34,10 @@
     <!-- Apple -->
     <link rel="apple-touch-icon" href="<%= static_url_without_port(@conn, "/images/#{assigns[:squeeze_status]}.png") %>">
 
-
     <%= csrf_meta_tag() %>
-    <link phx-track-static rel="stylesheet" href="<%= static_url_without_port(@conn, "/css/app.css") %>"/>
+
+    <!-- Asset tags & scripts -->
+    <link phx-track-static rel="stylesheet" type="text/css" href="<%= static_url_without_port(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= static_url_without_port(@conn, "/js/app.js") %>"></script>
 
     <script>

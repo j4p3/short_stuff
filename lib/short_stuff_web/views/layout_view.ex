@@ -1,8 +1,6 @@
 defmodule ShortStuffWeb.LayoutView do
   use ShortStuffWeb, :view
 
-  @port_removal_pattern ~r/(^.*):/
-
   @doc """
   As in "Is the squeeze squozen yet?"
   """
@@ -15,12 +13,19 @@ defmodule ShortStuffWeb.LayoutView do
           bitstring
   def static_url_without_port(conn, asset) do
     Routes.static_url(conn, asset)
-    |> extract_substring(@port_removal_pattern)
+    |> extract_substring()
   end
 
-  @spec extract_substring(bitstring, %Regex{}) :: bitstring
-  defp extract_substring(target_string, regex_pattern) do
-    Regex.run(regex_pattern, target_string, capture: :all_but_first)
-    |> List.first()
+  # Remove the port from the asset URL in production environments
+  defp extract_substring(target_string) do
+    if System.get_env("MIX_ENV") != "dev" do
+      Regex.replace(
+      ~r/^(.*):\d*(.*)$/,
+      target_string,
+      "\\g{1}\\g{2}"
+    )
+    else
+      target_string
+    end
   end
 end
