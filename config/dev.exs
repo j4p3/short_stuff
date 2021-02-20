@@ -2,7 +2,7 @@ import Config
 
 hostname = System.get_env("HOSTNAME", "localhost")
 asset_host = System.get_env("ASSET_HOST", "localhost")
-port = System.get_env("PORT", 4000)
+port = System.get_env("PORT", "4000")
 db_user = System.get_env("DB_USER", "postgres")
 db_password = System.get_env("DB_PASSWORD", "postgres")
 db_host = System.get_env("DB_HOST", "localhost")

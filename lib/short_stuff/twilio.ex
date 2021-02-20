@@ -5,29 +5,6 @@ defmodule Twilio do
   @api_version "v1"
   @services_path "Services"
 
-  def use_httpoison() do
-    token = "#{System.fetch_env!("TWILIO_ACCOUNT_ID")}:#{System.fetch_env!("TWILIO_AUTH_TOKEN")}"
-    |> Base.encode64()
-
-    {:ok, body} = Jason.encode(%{
-      ToBinding: %{binding_type: "sms"},
-      Tag: "all",
-      Body: "foo"
-    })
-
-    %HTTPoison.Request{
-      method: :post,
-      url: "https://notify.twilio.com/#{uri("Notifications")}",
-      body: body,
-      headers: [
-        {"Accept", "application/json"},
-        {"Content-Type", "application/json"},
-        {"Authorization", "Basic #{token}"}
-      ]
-    }
-    |> HTTPoison.request()
-  end
-
   def create_binding(client, user) do
     Tesla.post(client, uri("Bindings"),
     %{
@@ -39,24 +16,19 @@ defmodule Twilio do
   end
 
   def broadcast(client, message) do
-    # body = Jason.encode(%{
-    #   Tag: "all",
-    #   ToBinding: %{binding_type: "sms"},
-    #   Body: message
-    # })
-    Tesla.post(client, uri("Notifications"), %{
+    body = %{
       Tag: "all",
       ToBinding: %{binding_type: "sms"},
       Body: message
-    })
+    }
+    Tesla.post(client, uri("Notifications"), body)
   end
 
   def client(opts \\ %{}) do
     Tesla.client([
       {Tesla.Middleware.BaseUrl, "https://notify.twilio.com"},
       {Tesla.Middleware.BasicAuth, Map.merge(%{username: System.fetch_env!("TWILIO_ACCOUNT_ID"), password: System.fetch_env!("TWILIO_AUTH_TOKEN")}, opts)},
-      Tesla.Middleware.FormUrlencoded
-      # Tesla.Middleware.JSON
+      {Tesla.Middleware.FormUrlencoded, encode: &Plug.Conn.Query.encode/1, decode: &Plug.Conn.Query.decode/1}
     ])
   end
 
