@@ -24,6 +24,7 @@ resource "aws_cloudfront_distribution" "shortstuff_assets" {
 
     forwarded_values {
       query_string = false
+       headers      = ["Origin"]
 
       cookies {
         forward = "none"

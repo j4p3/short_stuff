@@ -34,7 +34,7 @@ defmodule ShortStuffWeb.Endpoint do
     from: :short_stuff,
     gzip: true,
     only: ~w(css fonts images js favicon.ico robots.txt),
-    headers: [{"access-control-allow-origin", "*"}]
+    headers: [{"access-control-allow-origin", "*.isthesqueezesquoze.com"}]
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
