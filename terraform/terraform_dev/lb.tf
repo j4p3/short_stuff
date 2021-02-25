@@ -18,20 +18,6 @@ resource "aws_lb" "shortstuff" {
   }
 }
 
-resource "aws_acm_certificate" "shortstuff" {
-  domain_name       = "isthesqueezesquoze.com"
-  validation_method = "DNS"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-
-  tags = {
-    app         = var.name
-    environment = var.environment
-  }
-}
-
 resource "aws_lb_target_group" "shortstuff" {
   port        = "4000"
   protocol    = "HTTP"
@@ -81,7 +67,7 @@ resource "aws_lb_listener" "shortstuff_https" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate.shortstuff.arn
+  certificate_arn   = "arn:aws:acm:us-east-1:075531476457:certificate/b5cede04-fbb8-4feb-91b3-337e21d36f7d"
 
   default_action {
     type             = "forward"

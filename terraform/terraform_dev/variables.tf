@@ -10,15 +10,6 @@ variable "environment" {
   default     = "dev"
 }
 
-variable "hostname" {
-  type = string
-  description = "Phoenix endpoint config"
-}
-variable "asset_host" {
-  type = string
-  description = "Phoenix endpoint config"
-}
-
 variable "aws_region" {
   type        = string
   description = "Region of the resources"
@@ -94,6 +85,15 @@ variable "ecs_application_count" {
   default     = 1
 }
 
+variable "hostname" {
+  type = string
+  description = "Phoenix endpoint config"
+}
+variable "asset_host" {
+  type = string
+  description = "Phoenix endpoint config"
+}
+
 variable "twilio_account_id" {
   type = string
   description = "Twilio API credential"
@@ -107,4 +107,9 @@ variable "twilio_auth_token" {
 variable "twilio_notify_service_id" {
   type = string
   description = "Twilio API credential"
+}
+
+variable "aws_acm_certificate" {
+  type = string
+  description = "ARN of ACM cert for CDN"
 }

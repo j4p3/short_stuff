@@ -109,7 +109,12 @@ variable "twilio_notify_service_id" {
   description = "Twilio API credential"
 }
 
-variable "aws_acm_certificate" {
+variable "aws_acm_certificate_arn" {
   type = string
   description = "ARN of ACM cert for CDN"
+}
+
+variable "existing_static_site_cloudfront_distribution_id" {
+  type = string
+  description = "ID of existing static site cloudfront distro"
 }

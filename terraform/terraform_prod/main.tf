@@ -2,6 +2,11 @@ provider "aws" {
   region = "us-west-1"
 }
 
+provider "aws" {
+  alias = "east"
+  region = "us-east-1"
+}
+
 resource "aws_vpc" "default" {
   cidr_block = "10.0.0.0/16"
 

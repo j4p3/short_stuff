@@ -18,20 +18,6 @@ resource "aws_lb" "shortstuff" {
   }
 }
 
-resource "aws_acm_certificate" "shortstuff" {
-  domain_name       = "isthesqueezesquoze.com"
-  validation_method = "DNS"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-
-  tags = {
-    app         = var.name
-    environment = var.environment
-  }
-}
-
 resource "aws_lb_target_group" "shortstuff" {
   port        = "4000"
   protocol    = "HTTP"
@@ -39,12 +25,12 @@ resource "aws_lb_target_group" "shortstuff" {
   target_type = "ip"
 
   health_check {
-    enabled = true
-    path = "/health"
-    matcher = "200"
-    interval = 30
+    enabled             = true
+    path                = "/health"
+    matcher             = "200"
+    interval            = 30
     unhealthy_threshold = 10
-    timeout = 25
+    timeout             = 25
   }
 
   depends_on = [aws_lb.shortstuff]
@@ -61,19 +47,14 @@ resource "aws_lb_listener" "shortstuff_http" {
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = aws_lb_target_group.shortstuff.arn
-    type             = "forward"
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
-
-  # default_action {
-  #   type = "redirect"
-
-  #   redirect {
-  #     port        = "443"
-  #     protocol    = "HTTPS"
-  #     status_code = "HTTP_301"
-  #   }
-  # }
 }
 
 resource "aws_lb_listener" "shortstuff_https" {
@@ -81,12 +62,16 @@ resource "aws_lb_listener" "shortstuff_https" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate.shortstuff.arn
+  certificate_arn   = aws_acm_certificate.shortstuff_application.arn
 
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.shortstuff.arn
   }
+
+  depends_on = [
+    aws_acm_certificate.shortstuff_application
+  ]
 }
 
 
