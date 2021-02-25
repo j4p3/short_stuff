@@ -1,14 +1,13 @@
-locals {
-  s3_origin_id = "shortstuff_cdn_access"
-}
-
 resource "aws_cloudfront_distribution" "shortstuff_assets" {
   origin {
-    domain_name = aws_s3_bucket.shortstuff_assets.bucket_regional_domain_name
-    origin_id   = local.s3_origin_id
+    domain_name = aws_lb.shortstuff.dns_name
+    origin_id = "application_lb"
 
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.shortstuff_assets_access_identity.cloudfront_access_identity_path
+    custom_origin_config {
+      http_port = aws_lb_listener.shortstuff_http.port
+      https_port = aws_lb_listener.shortstuff_https.port
+      origin_protocol_policy = "match-viewer"
+      origin_ssl_protocols = [ "TLSv1" ]
     }
   }
 
@@ -21,7 +20,7 @@ resource "aws_cloudfront_distribution" "shortstuff_assets" {
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
     cached_methods   = ["GET", "HEAD"]
-    target_origin_id = local.s3_origin_id
+    target_origin_id = "application_lb"
 
     forwarded_values {
       query_string = false
