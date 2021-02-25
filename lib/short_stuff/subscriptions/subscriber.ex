@@ -28,15 +28,10 @@ defmodule ShortStuff.Subscriptions.Subscriber do
   def validate_required_attributes(changeset, %{"phone" => _}) do
     changeset
     |> validate_required([:phone])
-    |> IO.inspect()
     |> validate_parsable()
-    |> IO.inspect()
     |> update_change(:phone, &string_to_record/1)
-    |> IO.inspect()
     |> validate_phone_number()
-    |> IO.inspect()
     |> update_change(:phone, &record_to_string/1)
-    |> IO.inspect()
   end
 
   def validate_required_attributes(changeset, _attrs) do
@@ -59,8 +54,6 @@ defmodule ShortStuff.Subscriptions.Subscriber do
   end
 
   defp string_to_record(phone_string) do
-    IO.puts("string_to_record")
-
     case ExPhoneNumber.parse(phone_string, "US") do
       {:ok, phone_number} ->
         phone_number
@@ -71,14 +64,11 @@ defmodule ShortStuff.Subscriptions.Subscriber do
   end
 
   defp record_to_string(%ExPhoneNumber.Model.PhoneNumber{} = phone_record) do
-    IO.puts("record_to_string")
     ExPhoneNumber.format(phone_record, :e164)
   end
   defp record_to_string(phone_string), do: phone_string
 
   defp validate_phone_number(changeset) do
-    IO.puts("validate_phone_number")
-
     if Enum.empty?(changeset.errors) do
       validate_change(changeset, :phone, fn _, phone ->
         case ExPhoneNumber.is_valid_number?(phone) do

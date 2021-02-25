@@ -50,3 +50,21 @@ resource "aws_route53_record" "domain_mail_from_spf" {
 resource "aws_ses_email_identity" "jp" {
   email = "jp@${aws_ses_domain_identity.domain_identity.domain}"
 }
+
+# Can't create these rules by TF
+# resource "aws_ses_receipt_rule_set" "shortstuff_ses_rules" {
+#   rule_set_name = "shortstuff-ses-rules"
+# }
+
+# resource "aws_ses_receipt_rule" "shortstuff_forward" {
+#   name          = "shortstuff_forward"
+#   rule_set_name = "shortstuff-ses-rules"
+#   recipients    = ["jp@isthesqueezesquoze.com"]
+#   enabled       = true
+#   scan_enabled  = true
+
+#   sns_action {
+#     topic_arn = aws_sns_topic.shortstuff.arn
+#     position = 1
+#   }
+# }
