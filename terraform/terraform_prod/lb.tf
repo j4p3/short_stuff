@@ -33,6 +33,10 @@ resource "aws_lb_target_group" "shortstuff" {
     timeout             = 25
   }
 
+  stickiness {
+    type = "lb_cookie"
+  }
+
   depends_on = [aws_lb.shortstuff]
 
   tags = {
