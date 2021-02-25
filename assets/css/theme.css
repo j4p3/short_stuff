@@ -61,6 +61,8 @@ article, section {
 
 button {
   height: 100%;
+  font-size: 18px;
+  padding: 0.5em;
 }
 
 .container {
