@@ -13,7 +13,7 @@
   <main>
     <h2>as of <span class="live"><%= date_format(@short_info.updated_at) %></span>,</h2>
     <h1>
-      the squeeze <span class="live"><%= did_it_or_not("has") %><span class="blinking">_</span></span>been squoze.
+      the squeeze <span class="live"><%= squeeze_verb() %><span class="blinking">_</span></span><%= squeeze_to_be() %> squoze.
     </h1>
   </main>
   <section>
@@ -44,5 +44,5 @@
   <section></section>
 <% end %>
 <section>
-  <button id="subscribe" phx-click="init_subscribe">click to subscribe and I'll keep you informed about changes in short interest and borrow availability</button>
+  <button id="subscribe" phx-click="init_subscribe">click to subscribe and I'll tell you when short interest and borrow availability change drastically</button>
 </section>

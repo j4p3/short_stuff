@@ -4,14 +4,14 @@
   phx_submit: "subscribe" %>
 
   <div class="container">
-    <h3>give me ur info & I'll tell you when the numbers change</h3>
+    <h3>give me ur info & I'll tell you when the numbers change (either or both, up to you)</h3>
       <div class="form_row">
         <div>
           <%= label f, :email %>
           <%= error_tag f, :email %>
         </div>
         <div>
-          <%= email_input f, :email, placeholder: "either or both" %>
+          <%= email_input f, :email, placeholder: "foo@bar.com" %>
         </div>
       </div>
       <div class="form-row">

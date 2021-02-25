@@ -51,6 +51,14 @@ defmodule ShortStuffWeb.PageLive do
     if ShortStuff.Shorts.are_squeezed?(), do: "#{verb}", else: "#{verb} not"
   end
 
+  def squeeze_verb() do
+    if ShortStuff.Shorts.are_squeezed?(), do: "is", else: "has not"
+  end
+
+  def squeeze_to_be() do
+    if ShortStuff.Shorts.are_squeezed?(), do: "being", else: "been"
+  end
+
   def date_format(datetime) do
     {:ok, human_string} = datetime
     |> Timex.Timezone.convert("America/New_York")
