@@ -33,18 +33,15 @@ defmodule ShortStuffWeb.PageLive do
 
   @impl true
   def handle_event("init_subscribe", _value, socket) do
-    IO.puts("received init_subscribe")
     {:noreply, assign(socket, subscribe_active: true)}
   end
 
   @impl true
   def handle_params(params, _url, socket) do
-    IO.puts("received handle_params")
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
   defp apply_action(socket, :index, _params) do
-    IO.puts("received apply_action")
     assign(socket, subscribe_active: false)
   end
 

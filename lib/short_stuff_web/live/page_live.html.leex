@@ -23,7 +23,7 @@
         <li><b>short interest: </b>
           <span class="live"><%= @short_info.short_interest %>m </span>
           <span>(<%= @short_info.source %>)</span>
-          <p><%= @short_info.short_interest_description %></>
+          <div><%= @short_info.short_interest_description %></div>
         </li>
         <li><b>borrow rate (Interactive Brokers): </b>
           <span class="live"> <%= @short_info.borrow_rate %>% </span>
@@ -31,7 +31,9 @@
         <li><b>borrow availability (Interactive Brokers): </b>
           <span class="live"> <%= @short_info.borrow_availability %> </span>
         </li>
-        <li><%= @short_info.note %></li>
+        <%= if @short_info.note do %>
+          <li><%= @short_info.note %></li>
+        <% end %>
       </ul>
     </p>
   </section>
