@@ -60,3 +60,7 @@
 #   type            = each.value.type
 #   zone_id         = aws_route53_zone.shortstuff.zone_id
 # }
+
+data "aws_route53_zone" "shortstuff" {
+  name         = "isthesqueezesquoze.com."
+}
