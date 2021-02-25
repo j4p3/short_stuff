@@ -17,9 +17,9 @@ defmodule ShortStuff.Application do
       {Phoenix.PubSub, name: ShortStuff.PubSub},
       ShortStuffWeb.Presence,
       # Start the Endpoint (http/https)
-      ShortStuffWeb.Endpoint
-      # Start a worker by calling: ShortStuff.Worker.start_link(arg)
-      # {ShortStuff.Worker, arg}
+      ShortStuffWeb.Endpoint,
+      # Start async task supervisor
+      # {Task.Supervisor, ShortStuff.TaskSupervisor}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -37,7 +37,8 @@ config :kaffy,
 # Authentication
 config :short_stuff, :pow,
   user: ShortStuff.Users.User,
-  repo: ShortStuff.Repo
+  repo: ShortStuff.Repo,
+  web_module: ShortStuffWeb
 
 # Twilio
 # config :ex_twilio,

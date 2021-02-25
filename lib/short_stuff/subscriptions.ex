@@ -57,6 +57,32 @@ defmodule ShortStuff.Subscriptions do
     |> unique_constraint(:phone, name: :subscribers_phone_index)
     |> update_change(:email, &String.downcase/1)
     |> Repo.insert()
+    |> process_subscription()
+  end
+
+  defp process_subscription({:ok, subscriber}) do
+    if subscriber.email, do: Task.start(__MODULE__, :create_email, [subscriber.id, subscriber.email])
+    if subscriber.phone, do: Task.start(__MODULE__, :create_phone, [subscriber.id, subscriber.phone])
+    {:ok, subscriber}
+  end
+  defp process_subscription(error_body) do
+    error_body
+  end
+
+  @doc """
+  Async create an external phone record
+  """
+  def create_phone(subscriber_id, subscriber_phone) do
+    Twilio.client()
+    |> Twilio.create_binding(subscriber_id, subscriber_phone)
+    |> Twilio.log_response()
+  end
+
+  @doc """
+  Async create an external email record
+  """
+  def create_email(subscriber_id, _subscriber_email) do
+    IO.puts(subscriber_id)
   end
 
   @doc """

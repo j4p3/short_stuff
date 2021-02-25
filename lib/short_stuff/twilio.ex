@@ -1,23 +1,21 @@
 defmodule Twilio do
-  @moduledoc """
-  A binding is a Twilio record describing a phone number's subscription to a notification service.
-  """
+  require Logger
   @api_version "v1"
   @services_path "Services"
 
-  def create_binding(client, user) do
+  def create_binding(client, subscriber_id, subscriber_phone) do
     Tesla.post(client, uri("Bindings"),
     %{
-      Identity: user.id,
+      Identity: subscriber_id,
       BindingType: "sms",
-      Address: user.phone,
+      Address: subscriber_phone,
       Tags: ["shortstuff"]
     })
   end
 
   def broadcast(client, message) do
     body = %{
-      Tag: "all",
+      Tag: "shortstuff",
       ToBinding: %{binding_type: "sms"},
       Body: message
     }
@@ -30,6 +28,14 @@ defmodule Twilio do
       {Tesla.Middleware.BasicAuth, Map.merge(%{username: System.fetch_env!("TWILIO_ACCOUNT_ID"), password: System.fetch_env!("TWILIO_AUTH_TOKEN")}, opts)},
       {Tesla.Middleware.FormUrlencoded, encode: &Plug.Conn.Query.encode/1, decode: &Plug.Conn.Query.decode/1}
     ])
+  end
+
+  def log_response({:ok, response}) do
+    Logger.info("Twilio responded with #{response.status}")
+  end
+
+  def log_response({:error, response}) do
+    Logger.warn(("Twilio failed with #{response.status}"))
   end
 
   defp uri(endpoint) do

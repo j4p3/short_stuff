@@ -14,25 +14,28 @@ defmodule ShortStuffWeb.SubscribeFormComponent do
 
   @impl true
   def handle_event("subscribe", %{"subscriber" => subscriber_params}, socket) do
-    result = Subscriptions.create_subscriber(subscriber_params)
+    subscriber_params
+    |> Enum.filter(fn {_, v} -> v != "" end)
+    |> Enum.into(%{})
+    |> Subscriptions.create_subscriber()
+    |> handle_result(socket)
+  end
 
-    case result do
-      {:ok, _subscriber} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "subscribed, talk to you soon")
-         |> assign(subscribe_active: false)
-         |> push_redirect(to: socket.assigns.return_to)}
+  defp handle_result({:ok, _subscriber}, socket) do
+    {:noreply,
+     socket
+     |> put_flash(:info, "subscribed, talk to you soon")
+     |> assign(subscribe_active: false)
+     |> push_redirect(to: socket.assigns.return_to)}
+  end
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        IO.puts("creation failed")
-        IO.inspect(changeset)
-        {:noreply,
-         socket
-         |> put_flash(:warning, "that didn't work. hit me up on twitter.")
-         |> assign(
-           changeset: changeset
-         )}
-    end
+  defp handle_result({:error, %Ecto.Changeset{} = changeset}, socket) do
+    IO.puts("creation failed")
+    IO.inspect(changeset)
+
+    {:noreply,
+     socket
+     |> put_flash(:warning, "that didn't work. hit me up on twitter.")
+     |> assign(changeset: changeset)}
   end
 end
