@@ -57,7 +57,8 @@ defmodule ShortStuff.MixProject do
       {:tesla, "~> 1.4.0"},
       {:hackney, "~> 1.17"},
       {:jason, "~> 1.0"},
-      {:ex_phone_number, "~> 0.2"}
+      {:ex_phone_number, "~> 0.2"},
+      {:csv, "~> 2.4"}
     ]
   end
 
