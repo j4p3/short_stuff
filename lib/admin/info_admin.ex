@@ -10,21 +10,24 @@ defmodule ShortStuff.Shorts.InfoAdmin do
         title: "Latest update",
         content: "#{ShortStuff.Shorts.datetime_format(latest.updated_at)}",
         icon: "book",
-        order: 1
+        order: 1,
+        width: 4
       },
       %{
         type: "tidbit",
         title: "Latest status",
         content: "is squoze: #{if latest.is_squoze, do: "yes", else: "no"}",
         icon: (if latest.is_squoze, do: "exclamation-circle", else: "minus-circle"),
-        order: 2
+        order: 2,
+        width: 4
       },
       %{
         type: "tidbit",
         title: "Latest interest",
         content: "#{latest.short_interest}m",
         icon: "chart-line",
-        order: 3
+        order: 3,
+        width: 4
       }
     ]
   end
