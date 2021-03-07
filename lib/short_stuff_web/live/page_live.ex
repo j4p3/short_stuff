@@ -47,6 +47,10 @@ defmodule ShortStuffWeb.PageLive do
 
   # Template helpers
 
+  # def render("style.root.html", assigns) do
+  #   "<link phx-track-static rel=\"stylesheet\" type=\"text/css\" href=\"#{static_url(assigns[:conn], "/css/page.css")}\"/>"
+  # end
+
   def did_it_or_not(verb) do
     if ShortStuff.Shorts.are_squeezed?(), do: "#{verb}", else: "#{verb} not"
   end
@@ -67,10 +71,7 @@ defmodule ShortStuffWeb.PageLive do
   end
 
   def datetime_format(datetime) do
-    {:ok, human_string} = datetime
-    |> Timex.Timezone.convert("America/New_York")
-    |> Timex.format("%H:%M %m/%d", :strftime)
-    human_string
+    ShortStuff.Shorts.datetime_format(datetime)
   end
 
   defp status_answer(status), do: if status, do: "yes", else: "no"

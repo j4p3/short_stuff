@@ -9,11 +9,22 @@ defmodule ShortStuffWeb.LayoutView do
     if ShortStuff.Shorts.are_squeezed?(), do: "yes", else: "no"
   end
 
-  @spec static_url_without_port(atom | %{:__struct__ => atom, optional(any) => any}, bitstring) ::
-          bitstring
   def static_url_without_port(conn, asset) do
     Routes.static_url(conn, asset)
     |> extract_substring()
+  end
+
+  # Conditionally render style on homepage
+  def render("style.root.html", assigns) do
+    if assigns[:live_action] == :index do
+      ~E"""
+        <link
+        phx-track-static
+        rel="stylesheet"
+        type="text/css"
+        href="<%= static_url_without_port(assigns[:conn], "/css/app.css") %>"/>
+      """
+    end
   end
 
   # Remove the port from the asset URL in production environments

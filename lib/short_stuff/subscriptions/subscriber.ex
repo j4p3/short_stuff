@@ -4,9 +4,9 @@ defmodule ShortStuff.Subscriptions.Subscriber do
 
   schema "subscribers" do
     field :email, :string
-    field :email_active, :boolean, default: true
+    field :email_active, :boolean, default: false
     field :phone, :string
-    field :phone_active, :boolean, default: true
+    field :phone_active, :boolean, default: false
 
     timestamps()
   end

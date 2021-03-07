@@ -32,7 +32,7 @@ config :short_stuff, ShortStuff.Repo,
 # with webpack to recompile .js and .css sources.
 config :short_stuff, ShortStuffWeb.Endpoint,
   url: [host: hostname],
-  static_url: [host: asset_host],
+  static_url: [host: asset_host, port: port],
   http: [port: port],
   debug_errors: true,
   code_reloader: true,

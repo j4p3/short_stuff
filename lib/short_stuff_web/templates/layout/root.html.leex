@@ -37,7 +37,7 @@
     <%= csrf_meta_tag() %>
 
     <!-- Asset tags & scripts -->
-    <link phx-track-static rel="stylesheet" type="text/css" href="<%= static_url_without_port(@conn, "/css/app.css") %>"/>
+    <%= render_existing(@view_module, "style." <> @view_template, assigns) %>
     <script defer phx-track-static type="text/javascript" src="<%= static_url_without_port(@conn, "/js/app.js") %>"></script>
 
     <script>

@@ -28,6 +28,13 @@ defmodule ShortStuff.Shorts do
     end
   end
 
+  def datetime_format(datetime) do
+    {:ok, human_string} = datetime
+    |> Timex.Timezone.convert("America/New_York")
+    |> Timex.format("%H:%M %m/%d", :strftime)
+    human_string
+  end
+
   defp high_day_delta?() do
     si_delta() > @stdv_si
   end
