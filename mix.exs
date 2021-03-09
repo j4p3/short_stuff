@@ -53,12 +53,14 @@ defmodule ShortStuff.MixProject do
       {:kaffy, "~> 0.9"},
       {:pow, "~> 1.0.22"},
       {:ex_aws, "~> 2.1"},
+      {:ex_aws_s3, "~> 2.0"},
       {:sweet_xml, "~> 0.6"},
       {:tesla, "~> 1.4.0"},
       {:hackney, "~> 1.17"},
       {:jason, "~> 1.0"},
       {:ex_phone_number, "~> 0.2"},
-      {:csv, "~> 2.4"}
+      {:csv, "~> 2.4"},
+      {:nimble_csv, "~> 1.1"}
     ]
   end
 

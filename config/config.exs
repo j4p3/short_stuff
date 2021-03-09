@@ -48,6 +48,11 @@ config :short_stuff, :pow,
 
 config :tesla, :adapter, Tesla.Adapter.Hackney
 
+config :ex_aws,
+  access_key_id: [{:system, "AWS_ACCESS_KEY_ID"}, :instance_role],
+  secret_access_key: [{:system, "AWS_SECRET_ACCESS_KEY"}, :instance_role],
+  region: "us-west-1"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 IO.puts("Overriding config settings with #{Mix.env()}.exs")
