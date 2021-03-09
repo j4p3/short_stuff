@@ -8,7 +8,7 @@ defmodule ShortStuff.Shorts do
 
   alias ShortStuff.Shorts.Info
 
-  @stdv_si 10
+  # @stdv_si 10
 
   def are_squeezed? do
     # This would call high_day_delta?() to generate an answer
@@ -35,9 +35,9 @@ defmodule ShortStuff.Shorts do
     human_string
   end
 
-  defp high_day_delta?() do
-    si_delta() > @stdv_si
-  end
+  # defp high_day_delta?() do
+  #   si_delta() > @stdv_si
+  # end
 
   def last_info() do
     Info

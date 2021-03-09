@@ -1,4 +1,4 @@
-defmodule ShortStuff.Subscriptions.BulkCreate do
+defmodule ShortStuff.Subscriptions.Importer do
   alias ShortStuff.Subscriptions.Subscriber
   alias ShortStuff.Repo
 
@@ -65,27 +65,4 @@ defmodule ShortStuff.Subscriptions.BulkCreate do
       |> Enum.reverse()
 	  {Enum.reverse(lines) ,last_line}
   end
-
-  def chunk_fun(chunk, acc) do
-    IO.puts("\n\n\nchunk_fun")
-    IO.puts("chunk")
-    IO.inspect(chunk)
-    IO.puts("acc")
-    IO.inspect(acc)
-    split_chunk(acc, chunk) || split_chunk(chunk, "")
-  end
-
-  def split_chunk("", _append_remaining), do: nil
-  def split_chunk(string, append_remaining) do
-    case String.split(string, "\n", parts: 2) do
-      [l] ->
-        {:cont, l}
-      [l, remaining] ->
-        {:cont, l, remaining <> append_remaining}
-    end
-  end
-
-  @spec after_fun(any) :: {:cont, <<>>} | {:cont, any, <<>>}
-  def after_fun(""), do: {:cont, ""}
-  def after_fun(acc), do: {:cont, acc, ""}
 end
