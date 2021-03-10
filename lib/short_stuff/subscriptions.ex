@@ -8,6 +8,49 @@ defmodule ShortStuff.Subscriptions do
   alias ShortStuff.Repo
 
   alias ShortStuff.Subscriptions.Subscriber
+  alias ShortStuff.Subscriptions.Message
+
+  @doc """
+  Broadcast or narrowcase message to subscribers via third party senders.
+  """
+  @spec send_message(%ShortStuff.Subscriptions.Message{}) :: {:ok, %ShortStuff.Subscriptions.Message{}}
+  def send_message(message) do
+    message
+    |> get_message_recipients()
+    |> call_message_senders()
+  end
+
+  defp get_message_recipients(message = %Message{target_id: nil}) do
+    {:ok, :all, message}
+  end
+  defp get_message_recipients(message = %Message{target_id: target_id}) do
+    case get_subscriber!(target_id) do
+      subscriber = %Subscriber{} ->
+        {:ok, subscriber, message}
+      error = %Ecto.NoResultsError{} ->
+        {:error, error}
+    end
+  end
+
+  defp call_message_senders({:ok, subscriber = %Subscriber{}, message = %Message{}}) do
+    if subscriber.email && subscriber.email_active do
+      IO.puts("calling SES for #{subscriber.email}")
+    end
+    if subscriber.phone && subscriber.phone_active do
+      IO.puts("calling Twilio for #{subscriber.phone}")
+      Twilio.client()
+      |> Twilio.send(message.content, subscriber.id)
+    end
+    {:ok, message}
+  end
+  defp call_message_senders({:ok, :all, message = %Message{}}) do
+    IO.puts("calling Twilio and SES for all subscribers")
+    Twilio.client()
+    |> Twilio.broadcast(message.content)
+
+    # todo: SES
+    {:ok, message}
+  end
 
   @doc """
   Returns the list of subscribers.
@@ -130,5 +173,12 @@ defmodule ShortStuff.Subscriptions do
   """
   def change_subscriber(%Subscriber{} = subscriber, attrs \\ %{}) do
     Subscriber.changeset(subscriber, attrs)
+  end
+
+  def create_message(attrs \\ %{}) do
+    IO.inspect attrs
+    %Message{}
+    |> Message.changeset(attrs)
+    |> Repo.insert()
   end
 end

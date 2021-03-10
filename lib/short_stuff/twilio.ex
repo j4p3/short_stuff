@@ -9,13 +9,22 @@ defmodule Twilio do
       Identity: subscriber_id,
       BindingType: "sms",
       Address: subscriber_phone,
-      Tags: ["shortstuff"]
+      Tag: ["shortstuff"]
     })
+  end
+
+  def send(client, message, target_id) do
+    body = %{
+      # Tag: "shortstuff",
+      Identity: target_id,
+      Body: message
+    }
+    Tesla.post(client, uri("Notifications"), body)
   end
 
   def broadcast(client, message) do
     body = %{
-      Tag: "shortstuff",
+      # Tag: "shortstuff",
       ToBinding: %{binding_type: "sms"},
       Body: message
     }
