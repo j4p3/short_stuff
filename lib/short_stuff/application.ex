@@ -4,6 +4,7 @@ defmodule ShortStuff.Application do
   @moduledoc false
 
   use Application
+  alias ShortStuff.RateLimiter
 
   def start(_type, _args) do
     ShortStuff.Diagnostics.run()
@@ -20,6 +21,31 @@ defmodule ShortStuff.Application do
       ShortStuffWeb.Endpoint,
       # Start async task supervisor
       # {Task.Supervisor, ShortStuff.TaskSupervisor}
+      {Task.Supervisor, name: RateLimiter.TaskSupervisor},
+      Supervisor.child_spec(
+        {
+          RateLimiter.get_rate_limiter(:twilio),
+          %{
+            timeframe_max_requests: RateLimiter.get_requests_per_timeframe(:twilio),
+            timeframe_units: RateLimiter.get_timeframe_unit(:twilio),
+            timeframe: RateLimiter.get_timeframe(:twilio),
+            key: :twilio
+          }
+        },
+        id: :twilio
+      ),
+      Supervisor.child_spec(
+        {
+          ShortStuff.RateLimiter.get_rate_limiter(:ses),
+          %{
+            timeframe_max_requests: RateLimiter.get_requests_per_timeframe(:ses),
+            timeframe_units: RateLimiter.get_timeframe_unit(:ses),
+            timeframe: RateLimiter.get_timeframe(:ses),
+            key: :ses
+          }
+        },
+        id: :ses
+      )
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

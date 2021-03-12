@@ -52,6 +52,12 @@ defmodule ShortStuff.Subscriptions do
     {:ok, message}
   end
 
+
+  def create_subscriber_binding(%{phone: nil} = %Subscriber{}), do: :empty
+  def create_subscriber_binding(%{id: id, phone: phone} = %Subscriber{}) do
+    Twilio.client() |> Twilio.create_binding(id, phone)
+  end
+
   @doc """
   Returns the list of subscribers.
 
@@ -63,6 +69,14 @@ defmodule ShortStuff.Subscriptions do
   """
   def list_subscribers do
     Repo.all(Subscriber)
+  end
+
+  def list_subscribers_with_phones do
+    ShortStuff.Subscriptions.Subscriber |> where([s], not is_nil(s.phone)) |> ShortStuff.Repo.all()
+  end
+
+  def list_subscribers_with_emails do
+    ShortStuff.Subscriptions.Subscriber |> where([s], not is_nil(s.email)) |> ShortStuff.Repo.all()
   end
 
   @doc """
@@ -126,6 +140,14 @@ defmodule ShortStuff.Subscriptions do
   """
   def create_email(subscriber_id, _subscriber_email) do
     IO.puts(subscriber_id)
+  end
+
+  def activate_phone(subscriber) do
+    update_subscriber(subscriber, %{phone_active: true})
+  end
+
+  def deactivate_phone(subscriber) do
+    update_subscriber(subscriber, %{phone_active: false})
   end
 
   @doc """

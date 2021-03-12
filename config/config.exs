@@ -15,7 +15,11 @@ config :short_stuff, ShortStuffWeb.Endpoint,
   url: [host: "localhost"],
   static_url: [host: System.get_env("ASSET_HOST", "localhost")],
   check_origin: true,
-  secret_key_base: System.get_env("SECRET_KEY_BASE", "+sSUimX8sdtLZImF0GtRkU5W92+0U6XreOukf3HbBPu87S7wZ06LzEdc4pQc3V4Z"),
+  secret_key_base:
+    System.get_env(
+      "SECRET_KEY_BASE",
+      "+sSUimX8sdtLZImF0GtRkU5W92+0U6XreOukf3HbBPu87S7wZ06LzEdc4pQc3V4Z"
+    ),
   render_errors: [view: ShortStuffWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: ShortStuff.PubSub,
   live_view: [signing_salt: System.get_env("SIGNING_SALT", "//oj0BhE")]
@@ -40,18 +44,24 @@ config :short_stuff, :pow,
   repo: ShortStuff.Repo,
   web_module: ShortStuffWeb
 
-# Twilio
-# config :ex_twilio,
-#   account_sid:   {:system, System.get_env("TWILIO_ACCOUNT_ID")},
-#   auth_token:    {:system, System.get_env("TWILIO_AUTH_TOKEN")},
-#   workspace_sid: {:system, System.get_env("TWILIO_NOTIFY_SERVICE_ID")}
-
 config :tesla, :adapter, Tesla.Adapter.Hackney
 
 config :ex_aws,
   access_key_id: [{:system, "AWS_ACCESS_KEY_ID"}, :instance_role],
   secret_access_key: [{:system, "AWS_SECRET_ACCESS_KEY"}, :instance_role],
   region: "us-west-1"
+
+config :short_stuff, :twilio,
+  rate_limiter: ShortStuff.RateLimiters.LeakyBucket,
+  timeframe_max_requests: 6,
+  timeframe_units: :seconds,
+  timeframe: 6
+
+config :short_stuff, :ses,
+  rate_limiter: ShortStuff.RateLimiters.LeakyBucket,
+  timeframe_max_requests: 13,  # actual rate limit is 14/s
+  timeframe_units: :seconds,
+  timeframe: 1
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

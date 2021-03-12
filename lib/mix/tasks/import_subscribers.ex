@@ -6,6 +6,6 @@ defmodule Mix.Tasks.ImportSubscribers do
 
   def run([bucket, filename]) do
     Mix.Task.run("app.start")
-    Mix.Task.run(ShortStuff.Subscriptions.BulkCreate.stream_s3_file(bucket, filename))
+    Mix.Task.run(ShortStuff.Subscriptions.Importer.stream_s3_file(bucket, filename))
   end
 end

@@ -4,6 +4,7 @@ defmodule Twilio do
   @services_path "Services"
 
   def create_binding(client, subscriber_id, subscriber_phone) do
+    IO.puts("creating binding for subscriber #{subscriber_id}")
     Tesla.post(client, uri("Bindings"),
     %{
       Identity: subscriber_id,
