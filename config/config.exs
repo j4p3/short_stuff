@@ -53,13 +53,13 @@ config :ex_aws,
 
 config :short_stuff, :twilio,
   rate_limiter: ShortStuff.RateLimiters.LeakyBucket,
-  timeframe_max_requests: 6,
+  timeframe_max_requests: 100,
   timeframe_units: :seconds,
-  timeframe: 6
+  timeframe: 1
 
 config :short_stuff, :ses,
   rate_limiter: ShortStuff.RateLimiters.LeakyBucket,
-  timeframe_max_requests: 13,  # actual rate limit is 14/s
+  timeframe_max_requests: 13,  # actual rate limit is 14/s (for mail sending?)
   timeframe_units: :seconds,
   timeframe: 1
 

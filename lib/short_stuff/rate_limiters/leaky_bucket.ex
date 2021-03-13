@@ -60,7 +60,7 @@ defmodule ShortStuff.RateLimiters.LeakyBucket do
       {req_module, req_function, req_args} = request_handler
       {resp_module, resp_function, resp_args} = response_handler
 
-      _response = apply(req_module, req_function, req_args)
+      apply(req_module, req_function, req_args)
       apply(resp_module, resp_function, resp_args)
     end)
 
