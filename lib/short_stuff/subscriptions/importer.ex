@@ -2,6 +2,11 @@ defmodule ShortStuff.Subscriptions.Importer do
   alias ShortStuff.Subscriptions.Subscriber
   alias ShortStuff.Repo
 
+  def import_file(:s3, bucket, file) do
+    stream_s3_file(bucket, file)
+    ShortStuff.Subscriptions.BulkActions.backfill_sending_records()
+  end
+
   def stream_s3_file(bucket, file) do
     ExAws.S3.download_file(bucket, file, :memory)
     |> ExAws.stream!()
