@@ -13,7 +13,8 @@ defmodule ShortStuff.Subscriptions do
   @doc """
   Broadcast or narrowcase message to subscribers via third party senders.
   """
-  @spec send_message(%ShortStuff.Subscriptions.Message{}) :: {:ok, %ShortStuff.Subscriptions.Message{}}
+  @spec send_message(%ShortStuff.Subscriptions.Message{}) ::
+          {:ok, %ShortStuff.Subscriptions.Message{}}
   def send_message(message) do
     message
     |> get_message_recipients()
@@ -23,10 +24,12 @@ defmodule ShortStuff.Subscriptions do
   defp get_message_recipients(message = %Message{target_id: nil}) do
     {:ok, :all, message}
   end
+
   defp get_message_recipients(message = %Message{target_id: target_id}) do
     case get_subscriber!(target_id) do
       subscriber = %Subscriber{} ->
         {:ok, subscriber, message}
+
       error = %Ecto.NoResultsError{} ->
         {:error, error}
     end
@@ -36,15 +39,20 @@ defmodule ShortStuff.Subscriptions do
     if subscriber.email && subscriber.email_active do
       IO.puts("calling SES for #{subscriber.email}")
     end
+
     if subscriber.phone && subscriber.phone_active do
       IO.puts("calling Twilio for #{subscriber.phone}")
+
       Twilio.client()
       |> Twilio.send(message.content, subscriber.id)
     end
+
     {:ok, message}
   end
+
   defp call_message_senders({:ok, :all, message = %Message{}}) do
     IO.puts("calling Twilio and SES for all subscribers")
+
     Twilio.client()
     |> Twilio.broadcast(message.content)
 
@@ -52,10 +60,15 @@ defmodule ShortStuff.Subscriptions do
     {:ok, message}
   end
 
-
-  def create_subscriber_binding(%{phone: nil} = %Subscriber{}), do: :empty
-  def create_subscriber_binding(%{id: id, phone: phone} = %Subscriber{}) do
+  # def create_subscriber_binding(%{phone: nil} = %Subscriber{}), do: :empty
+  def create_subscriber_phone(%{id: id, phone: phone} = %Subscriber{}) do
     Twilio.client() |> Twilio.create_binding(id, phone)
+  end
+
+  def create_subscriber_email(%{id: id, email: email} = %Subscriber{}) do
+    ExAws.SES.create_contact("shortstuff", email,
+      topic_preferences: %{TopicName: "gme", SubscriptionStatus: "OPT_IN"}
+    )
   end
 
   @doc """
@@ -72,11 +85,15 @@ defmodule ShortStuff.Subscriptions do
   end
 
   def list_subscribers_with_phones do
-    ShortStuff.Subscriptions.Subscriber |> where([s], not is_nil(s.phone)) |> ShortStuff.Repo.all()
+    ShortStuff.Subscriptions.Subscriber
+    |> where([s], not is_nil(s.phone))
+    |> ShortStuff.Repo.all()
   end
 
   def list_subscribers_with_emails do
-    ShortStuff.Subscriptions.Subscriber |> where([s], not is_nil(s.email)) |> ShortStuff.Repo.all()
+    ShortStuff.Subscriptions.Subscriber
+    |> where([s], not is_nil(s.email))
+    |> ShortStuff.Repo.all()
   end
 
   @doc """
@@ -118,28 +135,17 @@ defmodule ShortStuff.Subscriptions do
   end
 
   defp process_subscription({:ok, subscriber}) do
-    if subscriber.email, do: Task.start(__MODULE__, :create_email, [subscriber.id, subscriber.email])
-    if subscriber.phone, do: Task.start(__MODULE__, :create_phone, [subscriber.id, subscriber.phone])
+    if subscriber.email,
+      do: Task.start(__MODULE__, :create_subscriber_email, [subscriber.id, subscriber.email])
+
+    if subscriber.phone,
+      do: Task.start(__MODULE__, :create_subscriber_phone, [subscriber.id, subscriber.phone])
+
     {:ok, subscriber}
   end
+
   defp process_subscription(error_body) do
     error_body
-  end
-
-  @doc """
-  Async create an external phone record
-  """
-  def create_phone(subscriber_id, subscriber_phone) do
-    Twilio.client()
-    |> Twilio.create_binding(subscriber_id, subscriber_phone)
-    |> Twilio.log_response()
-  end
-
-  @doc """
-  Async create an external email record
-  """
-  def create_email(subscriber_id, _subscriber_email) do
-    IO.puts(subscriber_id)
   end
 
   def activate_phone(subscriber) do
@@ -148,6 +154,14 @@ defmodule ShortStuff.Subscriptions do
 
   def deactivate_phone(subscriber) do
     update_subscriber(subscriber, %{phone_active: false})
+  end
+
+  def activate_email(subscriber) do
+    update_subscriber(subscriber, %{email_active: true})
+  end
+
+  def deactivate_email(subscriber) do
+    update_subscriber(subscriber, %{email_active: false})
   end
 
   @doc """
@@ -198,7 +212,8 @@ defmodule ShortStuff.Subscriptions do
   end
 
   def create_message(attrs \\ %{}) do
-    IO.inspect attrs
+    IO.inspect(attrs)
+
     %Message{}
     |> Message.changeset(attrs)
     |> Repo.insert()
