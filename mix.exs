@@ -54,6 +54,7 @@ defmodule ShortStuff.MixProject do
       {:pow, "~> 1.0.22"},
       {:ex_aws, "~> 2.1"},
       {:ex_aws_s3, "~> 2.0"},
+      # {:ex_aws_ses, git: "https://github.com/j4p3/ex_aws_ses.git"},
       {:sweet_xml, "~> 0.6"},
       {:tesla, "~> 1.4.0"},
       {:hackney, "~> 1.17"},
