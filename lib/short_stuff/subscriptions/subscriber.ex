@@ -40,8 +40,6 @@ defmodule ShortStuff.Subscriptions.Subscriber do
   end
 
   defp validate_parsable(changeset) do
-    IO.puts("validate_parsable")
-
     validate_change(changeset, :phone, fn _, phone ->
       case ExPhoneNumber.parse(phone, "US") do
         {:ok, _phone} ->

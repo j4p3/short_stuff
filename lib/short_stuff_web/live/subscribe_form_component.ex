@@ -30,9 +30,6 @@ defmodule ShortStuffWeb.SubscribeFormComponent do
   end
 
   defp handle_result({:error, %Ecto.Changeset{} = changeset}, socket) do
-    IO.puts("creation failed")
-    IO.inspect(changeset)
-
     {:noreply,
      socket
      |> put_flash(:warning, "that didn't work. hit me up on twitter.")
