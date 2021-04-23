@@ -5,8 +5,9 @@ defmodule ShortStuff.Subscriptions do
 
   import Ecto.Query, warn: false
   import Ecto.Changeset
-  alias ShortStuff.Repo
+  require Logger
 
+  alias ShortStuff.Repo
   alias ShortStuff.Subscriptions.Subscriber
   alias ShortStuff.Subscriptions.Message
 
@@ -60,15 +61,22 @@ defmodule ShortStuff.Subscriptions do
     {:ok, message}
   end
 
-  # def create_subscriber_binding(%{phone: nil} = %Subscriber{}), do: :empty
-  def create_subscriber_phone(%{id: id, phone: phone} = %Subscriber{}) do
-    Twilio.client() |> Twilio.create_binding(id, phone)
+  def sync_subscriber_phone(%{id: id, phone: phone} = %Subscriber{}) do
+    Twilio.client()
+    |> Twilio.create_binding(id, phone)
+    |> IO.inspect()
   end
 
-  def create_subscriber_email(%{id: id, email: email} = %Subscriber{}) do
-    ExAws.SES.create_contact("shortstuff", email,
-      topic_preferences: %{TopicName: "gme", SubscriptionStatus: "OPT_IN"}
+  def sync_subscriber_email(%{id: id, email: email} = %Subscriber{}) do
+    list_name = "shortstuff_" <> System.get_env("MIX_ENV")
+    topic_name = "gme_" <> System.get_env("MIX_ENV")
+
+    ExAws.SES.create_contact(list_name, email,
+      attributes: "#{id}",
+      topic_preferences: [%{TopicName: topic_name, SubscriptionStatus: "OPT_IN"}]
     )
+    |> ExAws.request(debug_requests: true)
+    |> IO.inspect()
   end
 
   @doc """
@@ -136,10 +144,10 @@ defmodule ShortStuff.Subscriptions do
 
   defp process_subscription({:ok, subscriber}) do
     if subscriber.email,
-      do: Task.start(__MODULE__, :create_subscriber_email, [subscriber.id, subscriber.email])
+      do: Task.start(__MODULE__, :sync_subscriber_email, [subscriber.id, subscriber.email])
 
     if subscriber.phone,
-      do: Task.start(__MODULE__, :create_subscriber_phone, [subscriber.id, subscriber.phone])
+      do: Task.start(__MODULE__, :sync_subscriber_phone, [subscriber.id, subscriber.phone])
 
     {:ok, subscriber}
   end

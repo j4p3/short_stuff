@@ -47,8 +47,6 @@ config :short_stuff, :pow,
 config :tesla, :adapter, Tesla.Adapter.Hackney
 
 config :ex_aws,
-  access_key_id: [{:system, "AWS_ACCESS_KEY_ID"}, :instance_role],
-  secret_access_key: [{:system, "AWS_SECRET_ACCESS_KEY"}, :instance_role],
   region: "us-west-1"
 
 config :short_stuff, :twilio,
@@ -59,7 +57,7 @@ config :short_stuff, :twilio,
 
 config :short_stuff, :ses,
   rate_limiter: ShortStuff.RateLimiters.LeakyBucket,
-  timeframe_max_requests: 13,  # actual rate limit is 14/s (for mail sending?)
+  timeframe_max_requests: 12,  # rate limit for mail sending is 14/s
   timeframe_units: :seconds,
   timeframe: 1
 

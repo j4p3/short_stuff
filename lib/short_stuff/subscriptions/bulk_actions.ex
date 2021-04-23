@@ -1,13 +1,16 @@
 defmodule ShortStuff.Subscriptions.BulkActions do
   import Ecto.Query
+  require Logger
 
-  def backfill_sending_records() do
-    {:ok, twilio_pid} = Task.start(__MODULE__, :backfill_phone, [])
-    {:ok, ses_pid} = Task.start(__MODULE__, :backfill_email, [])
+  def sync_external_subscriptions() do
+    Logger.debug("ShortStuff.Subscriptions.BulkActions.sync_external_subscriptions")
+    {:ok, twilio_pid} = Task.start(__MODULE__, :sync_phones_to_twilio, [])
+    {:ok, ses_pid} = Task.start(__MODULE__, :sync_emails_to_ses, [])
     {:ok, [twilio_pid, ses_pid]}
   end
 
-  def backfill_phone() do
+  def sync_phones_to_twilio() do
+    Logger.debug("ShortStuff.Subscriptions.BulkActions.sync_phones_to_twilio")
     twilio_stream =
       ShortStuff.Subscriptions.Subscriber
       |> where([s], not is_nil(s.phone))
@@ -21,7 +24,8 @@ defmodule ShortStuff.Subscriptions.BulkActions do
     end)
   end
 
-  def backfill_email() do
+  def sync_emails_to_ses() do
+    Logger.debug("ShortStuff.Subscriptions.BulkActions.sync_emails_to_ses")
     email_stream =
       ShortStuff.Subscriptions.Subscriber
       |> where([s], not is_nil(s.email))
@@ -40,7 +44,7 @@ defmodule ShortStuff.Subscriptions.BulkActions do
       :twilio,
       {
         ShortStuff.Subscriptions,
-        :create_subscriber_phone,
+        :sync_subscriber_phone,
         [subscriber]
       },
       {
@@ -56,7 +60,7 @@ defmodule ShortStuff.Subscriptions.BulkActions do
       :ses,
       {
         ShortStuff.Subscriptions,
-        :create_subscriber_email,
+        :sync_subscriber_email,
         [subscriber]
       },
       {
