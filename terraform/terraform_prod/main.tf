@@ -23,6 +23,7 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.default.id
 }
 
+# todo: delete old subnets
 resource "aws_route_table_association" "public_subnet" {
   subnet_id      = aws_subnet.public.id
   route_table_id = aws_route_table.public.id
@@ -31,6 +32,16 @@ resource "aws_route_table_association" "public_subnet" {
 resource "aws_route_table_association" "private_subnet" {
   subnet_id      = aws_subnet.private.id
   route_table_id = aws_route_table.private.id
+}
+
+resource "aws_route_table_association" "public_subnet_a" {
+  subnet_id      = aws_subnet.public_a.id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table_association" "public_subnet_c" {
+  subnet_id      = aws_subnet.public_c.id
+  route_table_id = aws_route_table.public.id
 }
 
 resource "aws_eip" "nat_ip" {
@@ -42,7 +53,7 @@ resource "aws_internet_gateway" "igw" {
 }
 
 resource "aws_nat_gateway" "ngw" {
-  subnet_id     = aws_subnet.public.id
+  subnet_id     = aws_subnet.public_a.id
   allocation_id = aws_eip.nat_ip.id
 }
 

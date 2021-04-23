@@ -2,8 +2,8 @@ resource "aws_lb" "shortstuff" {
   name = "${var.name}-${var.environment}"
 
   subnets = [
-    aws_subnet.public.id,
-    aws_subnet.private.id
+    aws_subnet.public_a.id,
+    aws_subnet.public_c.id
   ]
 
   security_groups = [

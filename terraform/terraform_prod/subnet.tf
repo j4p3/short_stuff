@@ -1,3 +1,5 @@
+# todo: delete old subnets
+
 resource "aws_subnet" "public" {
   vpc_id     = aws_vpc.default.id
   cidr_block = "10.0.1.0/24"
@@ -19,6 +21,30 @@ resource "aws_subnet" "private" {
     app         = var.name
     environment = var.environment
     name        = "private"
+  }
+}
+
+resource "aws_subnet" "public_a" {
+  vpc_id     = aws_vpc.default.id
+  cidr_block = "10.0.5.0/24"
+  availability_zone = "${var.aws_region}a"
+
+  tags = {
+    app         = var.name
+    environment = var.environment
+    name        = "public_a"
+  }
+}
+
+resource "aws_subnet" "public_c" {
+  vpc_id     = aws_vpc.default.id
+  cidr_block = "10.0.6.0/24"
+  availability_zone = "${var.aws_region}c"
+
+  tags = {
+    app         = var.name
+    environment = var.environment
+    name        = "public_c"
   }
 }
 
