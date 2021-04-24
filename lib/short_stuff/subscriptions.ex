@@ -39,6 +39,7 @@ defmodule ShortStuff.Subscriptions do
   defp call_message_senders({:ok, subscriber = %Subscriber{}, message = %Message{}}) do
     if subscriber.email && subscriber.email_active do
       IO.puts("calling SES for #{subscriber.email}")
+      ShortStuff.SES.send_email(subscriber.email, message.content)
     end
 
     if subscriber.phone && subscriber.phone_active do
@@ -57,7 +58,7 @@ defmodule ShortStuff.Subscriptions do
     Twilio.client()
     |> Twilio.broadcast(message.content)
 
-    # todo: SES
+    ShortStuff.SES.broadcast(message)
     {:ok, message}
   end
 
@@ -89,6 +90,13 @@ defmodule ShortStuff.Subscriptions do
   """
   def list_subscribers do
     Repo.all(Subscriber)
+  end
+
+  def email_subscribers_stream do
+    ShortStuff.Subscriptions.Subscriber
+    |> where([s], not is_nil(s.email))
+    |> where(email_active: false)
+    |> ShortStuff.Repo.stream()
   end
 
   def list_subscribers_with_phones do

@@ -29,11 +29,7 @@ defmodule ShortStuff.Subscriptions.BulkActions do
   def sync_emails_to_ses() do
     Logger.debug("ShortStuff.Subscriptions.BulkActions.sync_emails_to_ses")
 
-    email_stream =
-      ShortStuff.Subscriptions.Subscriber
-      |> where([s], not is_nil(s.email))
-      |> where(email_active: false)
-      |> ShortStuff.Repo.stream()
+    email_stream = ShortStuff.Subscriptions.email_subscribers_stream()
 
     ShortStuff.Repo.transaction(fn ->
       email_stream
