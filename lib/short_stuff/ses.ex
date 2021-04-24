@@ -8,10 +8,9 @@ defmodule ShortStuff.SES do
 
   @spec send_email(String.t(), String.t()) :: any()
   def send_email(email_address, message) do
-    suffix = System.get_env("MIX_ENV", "dev")
     destination = %{ToAddresses: [email_address]}
     content = %{Simple: %{Body: %{Text: %{Data: message}}}}
-    list = %{ContactListName: "shortstuff_" <> suffix, TopicName: "gme_" <> suffix}
+    list = %{ContactListName: "shortstuff", TopicName: "gme"}
 
     ExAws.SES.send_email_v2(destination, content, "jp@isthesqueezesquoze.com",
       list_management: list

@@ -68,8 +68,8 @@ defmodule ShortStuff.Subscriptions do
   end
 
   def sync_subscriber_email(%{id: id, email: email} = %Subscriber{}) do
-    list_name = "shortstuff_" <> System.get_env("MIX_ENV")
-    topic_name = "gme_" <> System.get_env("MIX_ENV")
+    list_name = "shortstuff"
+    topic_name = "gme"
 
     ExAws.SES.create_contact(list_name, email,
       attributes: "#{id}",

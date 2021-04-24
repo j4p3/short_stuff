@@ -48,7 +48,7 @@ defmodule ShortStuff.Subscriptions.BulkActions do
     destination = %{
       ContactListDestination: %{
         ContactListImportAction: "PUT",
-        ContactListName: "shortstuff_" <> System.get_env("MIX_ENV", "dev")
+        ContactListName: "shortstuff"
       }
     }
 

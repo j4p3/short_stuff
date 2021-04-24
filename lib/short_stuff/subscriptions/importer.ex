@@ -7,7 +7,8 @@ defmodule ShortStuff.Subscriptions.Importer do
     Logger.debug("ShortStuff.Subscriptions.Importer.import_file")
     stream_s3_file(bucket, file)
     ShortStuff.Subscriptions.BulkActions.sync_external_subscriptions()
-    ShortStuff.Subscriptions.BulkActions.bulk_import_to_ses(bucket, file)
+    # CSV formats conflict
+    # ShortStuff.Subscriptions.BulkActions.bulk_import_to_ses(bucket, file)
   end
 
   def stream_s3_file(bucket, file) do
