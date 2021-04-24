@@ -151,10 +151,10 @@ defmodule ShortStuff.Subscriptions do
 
   defp process_subscription({:ok, subscriber}) do
     if subscriber.email,
-      do: Task.start(__MODULE__, :sync_subscriber_email, [subscriber.id, subscriber.email])
+      do: Task.start(__MODULE__, :sync_subscriber_email, [subscriber])
 
     if subscriber.phone,
-      do: Task.start(__MODULE__, :sync_subscriber_phone, [subscriber.id, subscriber.phone])
+      do: Task.start(__MODULE__, :sync_subscriber_phone, [subscriber])
 
     {:ok, subscriber}
   end
