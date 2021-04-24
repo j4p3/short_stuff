@@ -5,12 +5,14 @@ defmodule ShortStuff.Subscriptions.BulkActions do
   def sync_external_subscriptions() do
     Logger.debug("ShortStuff.Subscriptions.BulkActions.sync_external_subscriptions")
     {:ok, twilio_pid} = Task.start(__MODULE__, :sync_phones_to_twilio, [])
-    {:ok, ses_pid} = Task.start(__MODULE__, :sync_emails_to_ses, [])
-    {:ok, [twilio_pid, ses_pid]}
+    # Bulk import emails to SES directly from CSV
+    # {:ok, ses_pid} = Task.start(__MODULE__, :sync_emails_to_ses, [])
+    {:ok, [twilio_pid]}
   end
 
   def sync_phones_to_twilio() do
     Logger.debug("ShortStuff.Subscriptions.BulkActions.sync_phones_to_twilio")
+
     twilio_stream =
       ShortStuff.Subscriptions.Subscriber
       |> where([s], not is_nil(s.phone))
@@ -26,6 +28,7 @@ defmodule ShortStuff.Subscriptions.BulkActions do
 
   def sync_emails_to_ses() do
     Logger.debug("ShortStuff.Subscriptions.BulkActions.sync_emails_to_ses")
+
     email_stream =
       ShortStuff.Subscriptions.Subscriber
       |> where([s], not is_nil(s.email))
@@ -37,6 +40,25 @@ defmodule ShortStuff.Subscriptions.BulkActions do
       |> Stream.each(&enqueue_email(&1))
       |> Stream.run()
     end)
+  end
+
+  @spec bulk_import_to_ses(String.t(), String.t()) :: ExAws.Operation.JSON.t()
+  def bulk_import_to_ses(bucket, file) do
+    source = %{
+      DataFormat: "CSV",
+      S3Url: "s3://#{bucket}/#{file}"
+    }
+
+    destination = %{
+      ContactListDestination: %{
+        ContactListImportAction: "PUT",
+        ContactListName: "shortstuff_" <> System.get_env("MIX_ENV", "dev")
+      }
+    }
+
+    ExAws.SES.create_import_job(source, destination)
+    |> ExAws.request(debug_requests: true)
+    |> IO.inspect()
   end
 
   defp enqueue_phone(subscriber) do

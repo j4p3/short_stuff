@@ -64,7 +64,6 @@ defmodule ShortStuff.Subscriptions do
   def sync_subscriber_phone(%{id: id, phone: phone} = %Subscriber{}) do
     Twilio.client()
     |> Twilio.create_binding(id, phone)
-    |> IO.inspect()
   end
 
   def sync_subscriber_email(%{id: id, email: email} = %Subscriber{}) do

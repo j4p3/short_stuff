@@ -13,8 +13,6 @@ defmodule ShortStuff.Subscriptions.Subscriber do
 
   @doc false
   def changeset(subscriber, attrs) do
-    IO.inspect(attrs)
-
     subscriber
     |> cast(attrs, [:email, :phone, :email_active, :phone_active])
     |> validate_required_attributes(attrs)
@@ -57,23 +55,29 @@ defmodule ShortStuff.Subscriptions.Subscriber do
         phone_number
 
       {:error, _error} ->
-        phone_string
+        nil
     end
   end
 
   defp record_to_string(%ExPhoneNumber.Model.PhoneNumber{} = phone_record) do
     ExPhoneNumber.format(phone_record, :e164)
   end
-  defp record_to_string(phone_string), do: phone_string
+
+  defp record_to_string(nil), do: nil
 
   defp validate_phone_number(changeset) do
     if Enum.empty?(changeset.errors) do
       validate_change(changeset, :phone, fn _, phone ->
-        case ExPhoneNumber.is_valid_number?(phone) do
-          true ->
-            []
-          false ->
-            [phone: "invalid phone number"]
+        if phone do
+          case ExPhoneNumber.is_valid_number?(phone) do
+            true ->
+              []
+
+            false ->
+              [phone: "invalid phone number"]
+          end
+        else
+          [phone: "invalid phone number"]
         end
       end)
     else
