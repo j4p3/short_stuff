@@ -2,6 +2,14 @@ defmodule ShortStuff.Subscriptions.BulkActions do
   import Ecto.Query
   require Logger
 
+  @spec backfill(:email | :phone) :: {:ok, pid()}
+  def backfill(subscriber_attribute) do
+    case subscriber_attribute do
+      :email -> sync_emails_to_ses()
+      :phone -> sync_phones_to_twilio()
+    end
+  end
+
   def sync_external_subscriptions() do
     Logger.debug("ShortStuff.Subscriptions.BulkActions.sync_external_subscriptions")
     {:ok, twilio_pid} = Task.start(__MODULE__, :sync_phones_to_twilio, [])
