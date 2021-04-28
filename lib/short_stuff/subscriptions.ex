@@ -5,7 +5,6 @@ defmodule ShortStuff.Subscriptions do
 
   import Ecto.Query, warn: false
   import Ecto.Changeset
-  require Logger
 
   alias ShortStuff.Repo
   alias ShortStuff.Subscriptions.Subscriber
@@ -76,7 +75,6 @@ defmodule ShortStuff.Subscriptions do
       topic_preferences: [%{TopicName: topic_name, SubscriptionStatus: "OPT_IN"}]
     )
     |> ExAws.request(debug_requests: true)
-    |> IO.inspect()
   end
 
   @doc """

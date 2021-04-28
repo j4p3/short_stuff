@@ -1,6 +1,5 @@
 defmodule ShortStuff.Subscriptions.BulkActions do
   import Ecto.Query
-  require Logger
 
   @spec backfill(:email | :phone) :: {:ok, pid()}
   def backfill(subscriber_attribute) do
@@ -11,7 +10,6 @@ defmodule ShortStuff.Subscriptions.BulkActions do
   end
 
   def sync_external_subscriptions() do
-    Logger.debug("ShortStuff.Subscriptions.BulkActions.sync_external_subscriptions")
     {:ok, twilio_pid} = Task.start(__MODULE__, :sync_phones_to_twilio, [])
     # Bulk import emails to SES directly from CSV
     # {:ok, ses_pid} = Task.start(__MODULE__, :sync_emails_to_ses, [])
@@ -19,8 +17,6 @@ defmodule ShortStuff.Subscriptions.BulkActions do
   end
 
   def sync_phones_to_twilio() do
-    Logger.debug("ShortStuff.Subscriptions.BulkActions.sync_phones_to_twilio")
-
     twilio_stream =
       ShortStuff.Subscriptions.Subscriber
       |> where([s], not is_nil(s.phone))
@@ -35,8 +31,6 @@ defmodule ShortStuff.Subscriptions.BulkActions do
   end
 
   def sync_emails_to_ses() do
-    Logger.debug("ShortStuff.Subscriptions.BulkActions.sync_emails_to_ses")
-
     email_stream = ShortStuff.Subscriptions.email_subscribers_stream()
 
     ShortStuff.Repo.transaction(fn ->
@@ -83,7 +77,7 @@ defmodule ShortStuff.Subscriptions.BulkActions do
 
   defp enqueue_email(subscriber) do
     ShortStuff.RateLimiter.make_request(
-      :ses,
+      :ses_contacts,
       {
         ShortStuff.Subscriptions,
         :sync_subscriber_email,

@@ -55,9 +55,15 @@ config :short_stuff, :twilio,
   timeframe_units: :seconds,
   timeframe: 1
 
-config :short_stuff, :ses,
+config :short_stuff, :ses_contacts,
   rate_limiter: ShortStuff.RateLimiters.LeakyBucket,
-  timeframe_max_requests: 12,  # rate limit for mail sending is 14/s
+  timeframe_max_requests: 1,
+  timeframe_units: :seconds,
+  timeframe: 1
+
+config :short_stuff, :ses_emails,
+  rate_limiter: ShortStuff.RateLimiters.LeakyBucket,
+  timeframe_max_requests: 14,
   timeframe_units: :seconds,
   timeframe: 1
 

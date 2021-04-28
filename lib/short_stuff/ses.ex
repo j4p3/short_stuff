@@ -19,7 +19,7 @@ defmodule ShortStuff.SES do
 
   defp enqueue_email(subscriber_email, message) do
     ShortStuff.RateLimiter.make_request(
-      :ses,
+      :ses_emails,
       {
         __MODULE__,
         :send_email,
