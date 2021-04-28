@@ -32,6 +32,9 @@ defmodule ShortStuff.Subscriptions.Subscriber do
     |> update_change(:phone, &record_to_string/1)
   end
 
+  def validate_required_attributes(changeset, %{phone_active: _}), do: changeset
+  def validate_required_attributes(changeset, %{email_active: _}), do: changeset
+
   def validate_required_attributes(changeset, _attrs) do
     changeset
     |> add_error(:email, "either phone or email is required")
