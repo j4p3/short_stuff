@@ -4,13 +4,16 @@ defmodule Twilio do
   @services_path "Services"
 
   def create_binding(client, subscriber_id, subscriber_phone) do
-    Tesla.post(client, uri("Bindings"),
-    %{
+    Tesla.post(client, uri("Bindings"), %{
       Identity: subscriber_id,
       BindingType: "sms",
       Address: subscriber_phone,
       Tag: ["shortstuff"]
     })
+  end
+
+  def list_bindings(client) do
+    Tesla.get(client, uri("Bindings"), query: [tag: ["shortstuff"]])
   end
 
   def send(client, message, target_id) do
@@ -19,6 +22,7 @@ defmodule Twilio do
       Identity: target_id,
       Body: message
     }
+
     Tesla.post(client, uri("Notifications"), body)
   end
 
@@ -28,14 +32,23 @@ defmodule Twilio do
       ToBinding: %{binding_type: "sms"},
       Body: message
     }
+
     Tesla.post(client, uri("Notifications"), body)
   end
 
   def client(opts \\ %{}) do
     Tesla.client([
       {Tesla.Middleware.BaseUrl, "https://notify.twilio.com"},
-      {Tesla.Middleware.BasicAuth, Map.merge(%{username: System.fetch_env!("TWILIO_ACCOUNT_ID"), password: System.fetch_env!("TWILIO_AUTH_TOKEN")}, opts)},
-      {Tesla.Middleware.FormUrlencoded, encode: &Plug.Conn.Query.encode/1, decode: &Plug.Conn.Query.decode/1}
+      {Tesla.Middleware.BasicAuth,
+       Map.merge(
+         %{
+           username: System.fetch_env!("TWILIO_ACCOUNT_ID"),
+           password: System.fetch_env!("TWILIO_AUTH_TOKEN")
+         },
+         opts
+       )},
+      {Tesla.Middleware.FormUrlencoded,
+       encode: &Plug.Conn.Query.encode/1, decode: &Plug.Conn.Query.decode/1}
     ])
   end
 
@@ -44,7 +57,7 @@ defmodule Twilio do
   end
 
   def log_response({:error, response}) do
-    Logger.warn(("Twilio failed with #{response.status}"))
+    Logger.warn("Twilio failed with #{response.status}")
   end
 
   defp uri(endpoint) do
