@@ -36,15 +36,27 @@ defmodule ShortStuff.Application do
       ),
       Supervisor.child_spec(
         {
-          ShortStuff.RateLimiter.get_rate_limiter(:ses),
+          ShortStuff.RateLimiter.get_rate_limiter(:ses_emails),
           %{
-            timeframe_max_requests: RateLimiter.get_requests_per_timeframe(:ses),
-            timeframe_units: RateLimiter.get_timeframe_unit(:ses),
-            timeframe: RateLimiter.get_timeframe(:ses),
-            key: :ses
+            timeframe_max_requests: RateLimiter.get_requests_per_timeframe(:ses_emails),
+            timeframe_units: RateLimiter.get_timeframe_unit(:ses_emails),
+            timeframe: RateLimiter.get_timeframe(:ses_emails),
+            key: :ses_emails
           }
         },
-        id: :ses
+        id: :ses_emails
+      ),
+      Supervisor.child_spec(
+        {
+          ShortStuff.RateLimiter.get_rate_limiter(:ses_contacts),
+          %{
+            timeframe_max_requests: RateLimiter.get_requests_per_timeframe(:ses_contacts),
+            timeframe_units: RateLimiter.get_timeframe_unit(:ses_contacts),
+            timeframe: RateLimiter.get_timeframe(:ses_contacts),
+            key: :ses_contacts
+          }
+        },
+        id: :ses_contacts
       )
     ]
 
